@@ -77,4 +77,6 @@ Myapp::Application.configure do
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
+
+  config.actionmailer.defaulturl_options = { :host => 'http://www.clashprogress.com' } 
 end

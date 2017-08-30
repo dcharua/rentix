@@ -5,6 +5,7 @@ gem 'rails', '4.2.9'
 gem 'bootstrap-sass', '~> 3.3.7'
 gem 'font-awesome-rails', '4.7.0.1'
 gem 'devise'
+gem 'omniauth-facebook'
 
 
 # Use SCSS for stylesheets
@@ -21,6 +22,8 @@ gem 'coffee-rails', '~> 4.0.0'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
+gem 'jquery-rails'
+
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
@@ -46,4 +49,3 @@ end
 
 # Use unicorn as the app server
 # gem 'unicorn'
-

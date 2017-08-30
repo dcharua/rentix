@@ -1,0 +1,13 @@
+.btn-facebook.btn.btn-lg.btn-block {
+  color: white;
+  background-color: DodgerBlue;
+  font-size: 1em;
+  &:hover {
+    color: white;
+    background-color: RoyalBlue;
+  }
+}
+
+.wrapper-login{
+  margin-bottom: 50px;
+}

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>INSPINIA</title>
+
+    <!-- Main css styles -->
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+
+    <!-- Main javascript files -->
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+
+</head>
+<body class ="md-skin">
+
+
+    <!-- Wrapper-->
+    <div div class="wrapper-login">
+
+<div class="middle-box text-center loginscreen   animated fadeInDown">
+        <div>
+            <div>
+
+                <h1 class="logo-name">IN+</h1>
+
+            </div>
+            <h3>Register to IN+</h3>
+            <p>Create account to see it in action.</p>
+            <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+                <div class="form-group">
+                    <%= f.text_field :name, class: "form-control", placeholder: "Name", autofocus: true %>
+                </div>
+                <div class="form-group">
+                    <%= f.email_field :email, class: "form-control", placeholder: "Email" %>
+                </div>
+                <div class="form-group">
+                    <%= f.password_field :password, class: "form-control", placeholder: "Password", autocomplete: "off" %>
+                </div>
+                <div class="form-group">
+                    <%= f.password_field :password_confirmation , class: "form-control", placeholder: "Password confirmation", autocomplete: "off"%>
+                </div>
+
+                <div class="form-group">
+                    <div class="checkbox"><label> <input type="checkbox"><i></i> Agree the terms and policy </label></div>
+                </div>
+                <%= f.submit "Sign up", class: 'btn btn-primary block full-width m-b' %>
+                <div class="form-group">
+
+                  <%- if devise_mapping.omniauthable? %>
+                    <%- resource_class.omniauth_providers.each do |provider| %>
+                      <%= link_to omniauth_authorize_path(resource_name, provider), class: 'btn btn-facebook btn btn-lg btn-block' do %>
+                        <i class="fa fa-facebook fa-2x" ></i>
+                        Sign up with facebook
+                      <% end %>
+                    <% end -%>
+                  <% end -%>
+
+                  </div>
+                <p class="text-muted text-center"><small>Already have an account?</small></p>
+                <%= link_to('Login', new_user_session_path, class: "btn btn-sm btn-white btn-block") %>
+            <% end %>
+
+        </div>
+    </div>
+  </div>
+  <!-- End wrapper-->
+
+</body>
+</html>
