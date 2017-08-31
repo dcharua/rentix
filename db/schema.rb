@@ -11,7 +11,49 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170829221319) do
+ActiveRecord::Schema.define(version: 20170831000107) do
+
+  create_table "inquilinos", force: :cascade do |t|
+    t.string   "nombre"
+    t.date     "nacimiento"
+    t.string   "nacionalidad"
+    t.string   "curp"
+    t.string   "rfc"
+    t.integer  "user_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "inquilinos", ["user_id"], name: "index_inquilinos_on_user_id"
+
+  create_table "propiedads", force: :cascade do |t|
+    t.string   "nombre"
+    t.string   "calle"
+    t.string   "municipio"
+    t.string   "colonia"
+    t.integer  "numero"
+    t.string   "numeroe"
+    t.integer  "cp"
+    t.string   "estado"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "propiedads", ["user_id"], name: "index_propiedads_on_user_id"
+
+  create_table "rentas", force: :cascade do |t|
+    t.integer  "Inquilino_id"
+    t.integer  "propiedad_id"
+    t.date     "inicio"
+    t.date     "fin"
+    t.integer  "costo"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "rentas", ["Inquilino_id"], name: "index_rentas_on_Inquilino_id"
+  add_index "rentas", ["propiedad_id"], name: "index_rentas_on_propiedad_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

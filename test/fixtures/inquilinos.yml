@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nombre: MyString
+  nacimiento: 2017-08-30
+  nacionalidad: MyString
+  curp: MyString
+  rfc: MyString
+
+two:
+  nombre: MyString
+  nacimiento: 2017-08-30
+  nacionalidad: MyString
+  curp: MyString
+  rfc: MyString

@@ -15,7 +15,7 @@
 
 </head>
 <body class ="md-skin">
-
+  <%= devise_error_messages! %>
 
     <!-- Wrapper-->
     <div div class="wrapper-login">
@@ -46,7 +46,7 @@
                 <div class="form-group">
                     <div class="checkbox"><label> <input type="checkbox"><i></i> Agree the terms and policy </label></div>
                 </div>
-                <%= f.submit "Sign up", class: 'btn btn-primary block full-width m-b' %>
+                <%= f.submit t('.sign_up', :default => "Sign up"), class: 'btn btn-primary block full-width m-b' %>
                 <div class="form-group">
 
                   <%- if devise_mapping.omniauthable? %>

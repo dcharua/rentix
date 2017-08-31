@@ -13,4 +13,5 @@ class ApplicationController < ActionController::Base
     is_a?(Devise::SessionsController) ||  is_a?(Devise::RegistrationsController)? false : "application"
 
   end
+
 end
