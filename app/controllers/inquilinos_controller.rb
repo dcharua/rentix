@@ -1,7 +1,11 @@
 class InquilinosController < ApplicationController
+
+  before_action :set_inquilino, only: [:edit, :update, :show, :destroy]
+  before_action :require_same_user, only: [:edit, :update, :destroy]
+
   def index
-    @inquilinos = Inquilino.all
-    @actualizado = Inquilino.maximum('updated_at')
+    @inquilinos = current_user.inquilinos.all
+    @actualizado = current_user.inquilinos.maximum('updated_at')
   end
 
   def new
@@ -20,7 +24,6 @@ class InquilinosController < ApplicationController
   end
 
   def update
-    @inquilino = Inquilino.find(params[:id])
     if @inquilino.update(inquilino_params)
       flash[:success] = "Los datos fueron actualizados"
       redirect_to inquilinos_path
@@ -33,19 +36,30 @@ class InquilinosController < ApplicationController
 
   end
 
-  def inquilino_params
-    params.require(:inquilino).permit(:nombre, :nacimiento, :nacionalidad, :curp, :rfc)
-  end
-
   def edit
-      @inquilino = Inquilino.find(params[:id])
+
   end
 
   def destroy
-    @inquilino = Inquilino.find(params[:id])
     @inquilino.destroy
     flash[:danger] = "El inquilino fue eliminado"
     redirect_to inquilinos_path
+  end
+
+  private
+  def set_inquilino
+    @inquilino= Inquilino.find(params[:id])
+  end
+
+  def require_same_user
+    if current_user != @inquilino.user
+      flash[:danger] = "Solo puedes modificar tus inquilinos"
+      redirect_to root_path
+    end
+  end
+
+  def inquilino_params
+    params.require(:inquilino).permit(:nombre, :nacimiento, :nacionalidad, :curp, :rfc)
   end
 
 

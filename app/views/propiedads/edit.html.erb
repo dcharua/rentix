@@ -1,0 +1,90 @@
+<%= render 'shared/errors', obj: @propiedad %>
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+  $(".pais").select2();
+  language: "es"
+});
+</script>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Introduce los datos de la propiedad</h5>
+            </div>
+            <div class="ibox-content">
+                <%= form_for(@propiedad, :html => {class: "form-horizontal", role: "form"}) do |f| %>
+                    <div class="form-group"><%= f.label :nombre, 'Titulo', class: "col-md-2 control-label" %>
+                        <div class="col-md-10">
+                          <%= f.text_field :nombre, class: "form-control", placeholder: "Escribe un titulo para identificar la propiedad", autofocus: true %>
+                        </div>
+                      </div>
+
+                      <div class="hr-line-dashed"></div>
+
+                    <div class="form-group">
+                    <%= f.label :calle, 'Calle', class: "col-md-2 control-label" %>
+                        <div class="col-md-4">
+                          <%= f.text_field :calle, class: "form-control", autofocus: true %>
+                        </div>
+                        <%= f.label :numero, 'No.', class: "col-md-1 control-label" %>
+                        <div class="col-md-2">
+                          <%= f.text_field :numero, class: "form-control", autofocus: true %>
+                        </div>
+                        <%= f.label :numero, 'Ext.', class: "col-md-1 control-label" %>
+                        <div class="col-md-2">
+                          <%= f.text_field :numeroe, class: "form-control", autofocus: true %>
+                        </div>
+                      </div>
+
+                        <div class="form-group">
+                        <%= f.label :estado, 'Estado', class: "col-md-2 control-label" %>
+
+                          <div class="col-md-4">
+                              <%= f.select :estado, ["Aguascalientes", "Baja California", "Campeche", "Baja California Sur", "Chiapas", "Chihuahua", "Ciudad de México", "Coahuila",
+                                "Durango", "Estado de México", "Guanajuato", "Guerrero", "Hidalgo", "Jalisco", "Michoacán", "Nayarit", "Nuevo León", "Oaxaca", "Puebla", "Querétaro",
+                                "Quintana Roo", "San Luis Potosí", "Sinaloa", "Sonora", "Tabasco", "Tamaulipas", "Tlaxcala", "Veracruz", "Yucatán", "Zacatecas", ], {}, class: "pais form-control" %>
+                          </div>
+                          <%= f.label :municipio, 'Del/Municipio', class: "col-md-2 control-label" %>
+                          <div class="col-md-4">
+                            <%= f.text_field :municipio, class: "form-control", autofocus: true %>
+                          </div>
+                        </div>
+                          <div class="form-group">
+                          <%= f.label :colonia, class: "col-md-2 control-label" %>
+                          <div class="col-md-4">
+                            <%= f.text_field :colonia, class: "form-control", autofocus: true %>
+                          </div>
+                          <%= f.label :cp, 'Codigo Postal', class: "col-md-2 control-label" %>
+                          <div class="col-md-4">
+                            <%= f.text_field :cp, class: "form-control", autofocus: true %>
+                          </div>
+                        </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <div class="col-sm-12 text-center">
+                            <%= f.submit 'Editar', class: 'btn btn-primary btn-lg center' %>
+                        </div>
+                    </div>
+                  <% end %>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<% content_for :javascript do %>
+
+<script type="text/javascript">
+
+
+$(function() {
+
+
+});
+
+</script>
+
+<% end %>

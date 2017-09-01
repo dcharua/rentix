@@ -48,9 +48,8 @@
             <li class="<%= is_active_controller('Propiedad') %>">
                 <a href=""><i class="fa fa-building"></i> <span class="nav-label" data-i18n="nav.propiedad">Propiedades</span> <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse <%= is_active_controller('propiedads', 'in') %>">
-                    <li class="<%= is_active_action('ver') %>"><%= link_to "Ver", propiedads_ver_path %></li>
-                    <li class="<%= is_active_action('agregar') %>"><%= link_to "Agregar", propiedads_agregar_path %></li>
-                    <li class="<%= is_active_action('editar') %>"><%= link_to "Editar", propiedads_editar_path %></li>
+                    <li class="<%= is_active_action('index') %>"><%= link_to "Ver", propiedads_path %></li>
+                    <li class="<%= is_active_action('agregar') %>"><%= link_to "Agregar", new_propiedad_path %></li>
                 </ul>
             </li>
             <li class="<%= is_active_controller('Renta') %>">
