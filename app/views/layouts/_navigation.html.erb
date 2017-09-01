@@ -39,27 +39,26 @@
                 <% end %>
             </li>
             <li class="<%= is_active_controller('Inquilino') %>">
-                <a href=""><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.inquilinos">Inquilinos</span> <span class="fa arrow"></span></a>
+                <a href=""><i class="fa fa-users"></i> <span class="nav-label" data-i18n="nav.inquilinos">Inquilinos</span> <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse <%= is_active_controller('inquilinos', 'in') %>">
-                    <li class="<%= is_active_action('Ver') %>"><%= link_to "Ver", inquilinos_ver_path %></li>
-                    <li class="<%= is_active_action('Agregar') %>"><%= link_to "Agregar", inquilinos_agregar_path %></li>
-                    <li class="<%= is_active_action('Editar') %>"><%= link_to "Editar", inquilinos_editar_path %></li>
+                    <li class="<%= is_active_action('index') %>"><%= link_to "Ver", inquilinos_path %></li>
+                    <li class="<%= is_active_action('new') %>"><%= link_to "Agregar", new_inquilino_path %></li>
                 </ul>
             </li>
             <li class="<%= is_active_controller('Propiedad') %>">
-                <a href=""><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.propiedad">Propiedades</span> <span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level collapse <%= is_active_controller('Propiedad', 'in') %>">
-                    <li class="<%= is_active_action('Ver') %>"><%= link_to "Ver", propiedads_ver_path %></li>
-                    <li class="<%= is_active_action('Agregar') %>"><%= link_to "Agregar", propiedads_agregar_path %></li>
-                    <li class="<%= is_active_action('Editar') %>"><%= link_to "Editar", propiedads_editar_path %></li>
+                <a href=""><i class="fa fa-building"></i> <span class="nav-label" data-i18n="nav.propiedad">Propiedades</span> <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse <%= is_active_controller('propiedads', 'in') %>">
+                    <li class="<%= is_active_action('ver') %>"><%= link_to "Ver", propiedads_ver_path %></li>
+                    <li class="<%= is_active_action('agregar') %>"><%= link_to "Agregar", propiedads_agregar_path %></li>
+                    <li class="<%= is_active_action('editar') %>"><%= link_to "Editar", propiedads_editar_path %></li>
                 </ul>
             </li>
             <li class="<%= is_active_controller('Renta') %>">
-                <a href=""><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.propiedad">Rentas</span> <span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level collapse <%= is_active_controller('Renta', 'in') %>">
-                    <li class="<%= is_active_action('Ver') %>"><%= link_to "Ver", rentas_ver_path %></li>
-                    <li class="<%= is_active_action('Agregar') %>"><%= link_to "Agregar", rentas_agregar_path %></li>
-                    <li class="<%= is_active_action('Editar') %>"><%= link_to "Editar", rentas_editar_path %></li>
+                <a href=""><i class="fa fa-handshake-o"></i> <span class="nav-label" data-i18n="nav.renta">Rentas</span> <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse <%= is_active_controller('rentas', 'in') %>">
+                    <li class="<%= is_active_action('ver') %>"><%= link_to "Ver", rentas_ver_path %></li>
+                    <li class="<%= is_active_action('agregar') %>"><%= link_to "Agregar", rentas_agregar_path %></li>
+                    <li class="<%= is_active_action('editar') %>"><%= link_to "Editar", rentas_editar_path %></li>
                 </ul>
             </li>
         </ul>

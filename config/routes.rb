@@ -9,9 +9,7 @@ Rails.application.routes.draw do
   get "home/index"
   get "home/minor"
 
-  get "inquilinos/ver"
-  get "inquilinos/agregar"
-  get "inquilinos/editar"
+  resources :inquilinos
 
   get "propiedads/ver"
   get "propiedads/agregar"
