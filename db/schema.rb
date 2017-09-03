@@ -43,17 +43,19 @@ ActiveRecord::Schema.define(version: 20170831000107) do
   add_index "propiedads", ["user_id"], name: "index_propiedads_on_user_id"
 
   create_table "rentas", force: :cascade do |t|
-    t.integer  "Inquilino_id"
+    t.integer  "inquilino_id"
     t.integer  "propiedad_id"
     t.date     "inicio"
-    t.date     "fin"
+    t.date     "final"
     t.integer  "costo"
+    t.integer  "user_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
   end
 
-  add_index "rentas", ["Inquilino_id"], name: "index_rentas_on_Inquilino_id"
+  add_index "rentas", ["inquilino_id"], name: "index_rentas_on_inquilino_id"
   add_index "rentas", ["propiedad_id"], name: "index_rentas_on_propiedad_id"
+  add_index "rentas", ["user_id"], name: "index_rentas_on_user_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

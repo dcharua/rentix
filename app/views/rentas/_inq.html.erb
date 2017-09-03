@@ -1,0 +1,4 @@
+<%= f.label :inquilino, class: "col-md-2 control-label" %>
+    <div class="col-md-10">
+      <%= f.select :inquilino, options_from_collection_for_select(current_user.inquilinos.order(:nombre).all, "id", "nombre", params[:inquilino]), {}, class: "pais form-control" %>
+</div>

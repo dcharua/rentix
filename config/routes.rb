@@ -11,10 +11,9 @@ Rails.application.routes.draw do
 
   resources :inquilinos
   resources :propiedads
+  resources :rentas
 
-  get "rentas/ver"
-  get "rentas/agregar"
-  get "rentas/editar"
+  get "rentas/inq"
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

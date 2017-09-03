@@ -1,0 +1,56 @@
+<%= render 'shared/errors', obj: @renta%>
+<script type="text/javascript">
+
+$(document).ready(function() {
+  $(".pais").select2();
+  language: "es"
+});
+</script>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Introduce los datos de la renta</h5>
+            </div>
+            <div class="ibox-content">
+              <%= form_for(@renta, url: rentas_path(@renta), :html => {class: "form-horizontal", role: "form"}) do |f| %>
+                    <div class="form-group">
+                      <%= f.label :inquilino, class: "col-md-2 control-label" %>
+                      <div class="col-md-4">
+                        <%= f.select :inquilino, options_from_collection_for_select(current_user.inquilinos.order(:nombre).all, "id", "nombre", params[:inquilino]), {}, class: "pais form-control" %>
+                      </div>
+
+                      <%= f.label :propiedad, class: "col-md-2 control-label" %>
+                      <div class="col-md-4">
+                        <%= f.select :propiedad, options_from_collection_for_select(current_user.propiedads.order(:nombre).all, "id", "idnt" , params[:propiedad]), {}, class: "pais form-control" %>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <%= f.label :inicio, class: "col-md-2 control-label" %>
+                        <div class="col-md-4">
+                          <%= f.text_field :inicio, data:{ provide:'datepicker' }, class:"form-control-2"%>
+                        </div>
+                        <%= f.label :final, class: "col-md-2 control-label" %>
+                          <div class="col-md-4">
+                            <%= f.text_field :final, data:{ provide:'datepicker' }, class:"form-control-2"%>
+                          </div>
+
+                      </div>
+                    <div class="form-group"><%= f.label :costo, "Mensualidad", class: "col-md-2 control-label" %>
+                        <div class="col-md-10">
+                          <%= f.number_field :costo %>
+                        </div>
+                      </div>
+
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <div class="col-sm-12 text-center">
+                            <%= f.submit 'Crear', class: 'btn btn-primary btn-lg center' %>
+                        </div>
+                    </div>
+                  <% end %>
+            </div>
+        </div>
+    </div>
+</div>

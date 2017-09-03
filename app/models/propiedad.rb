@@ -3,4 +3,6 @@ class Propiedad < ActiveRecord::Base
   has_many :inquilinos, through: :rentas
   belongs_to :user
   validates :user_id, presence: true
+
+  def idnt; "#{nombre} : #{calle} ##{numero}";end
 end

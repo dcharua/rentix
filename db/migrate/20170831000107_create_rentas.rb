@@ -27,11 +27,12 @@ class CreateRentas < ActiveRecord::Migration
     end
 
   create_table :rentas do |t|
-      t.belongs_to :Inquilino, index: true
+      t.belongs_to :inquilino, index: true
       t.belongs_to :propiedad, index: true
       t.date :inicio
-      t.date :fin
+      t.date :final
       t.integer :costo
+      t.references :user, index: true, foreign_key: true
 
       t.timestamps null: false
     end
