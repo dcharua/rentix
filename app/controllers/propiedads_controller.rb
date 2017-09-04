@@ -38,6 +38,15 @@ class PropiedadsController < ApplicationController
 
   end
 
+  def search
+    @pro = Propiedad.search(params[:search_param])
+    if @pro
+      render partial: "lookup"
+    else
+       render status: :not_found, nothing: true
+    end
+  end
+
   def destroy
     @propiedad.destroy
     flash[:danger] = "La propiedad fue eliminada"
@@ -59,4 +68,5 @@ class PropiedadsController < ApplicationController
   def propiedad_params
     params.require(:propiedad).permit(:nombre, :calle, :colonia, :municipio, :numero, :numeroe, :cp, :estado)
   end
+  
 end

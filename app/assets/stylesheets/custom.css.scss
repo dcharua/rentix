@@ -80,6 +80,12 @@ text-align: center;
     text-align: center;
   }
 
+.input-group-addon,
+.input-group-btn,
+.input-group .form-control {
+  display: inherit;
+}
+
 #nuevo_inquilino {
   display:none;
 }

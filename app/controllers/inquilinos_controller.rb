@@ -2,6 +2,7 @@ class InquilinosController < ApplicationController
 
   before_action :set_inquilino, only: [:edit, :update, :show, :destroy]
   before_action :require_same_user, only: [:edit, :update, :destroy]
+  protect_from_forgery except: :search
 
   def index
     @inquilinos = current_user.inquilinos.all
@@ -40,6 +41,15 @@ class InquilinosController < ApplicationController
 
   end
 
+  def search
+    @inq = Inquilino.search(params[:search_param])
+    if @inq
+      render partial: "lookup"
+    else
+       render status: :not_found, nothing: true
+    end
+  end
+
   def destroy
     @inquilino.destroy
     flash[:danger] = "El inquilino fue eliminado"
@@ -61,6 +71,5 @@ class InquilinosController < ApplicationController
   def inquilino_params
     params.require(:inquilino).permit(:nombre, :nacimiento, :nacionalidad, :curp, :rfc)
   end
-
-
+  
 end
