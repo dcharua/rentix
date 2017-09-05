@@ -10,6 +10,7 @@ class RentasController < ApplicationController
 
   def new
       @renta = Rentas.new
+      @inquilino = Inquilino.new
   end
 
   def create
@@ -52,7 +53,19 @@ class RentasController < ApplicationController
     redirect_to rentas_path
   end
 
+  def existing
+      @renta = Rentas.new
+    respond_to do |format|
+      format.js   #looks for views/books/index.js.erb
+    end
+  end
 
+  def nuevo
+    @renta = Rentas.new
+    respond_to do |format|
+      format.js   #looks for views/books/index.js.erb
+    end
+  end
 
   private
   def set_renta

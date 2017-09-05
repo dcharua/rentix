@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   get "rentas/inq"
   get 'search_inquilinos', to: "inquilinos#search", :defaults => { :format => 'js' }
   get 'search_propiedads', to: "propiedads#search", :defaults => { :format => 'js' }
+  get 'existing_rentas', to: "rentas#existing", :defaults => { :format => 'js' }
+  get 'nuevo_rentas', to: "rentas#nuevo", :defaults => { :format => 'js' }
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
