@@ -6,19 +6,15 @@ class Pago < ActiveRecord::Base
 
   def self.search(param)
     return Pago.none if param.blank?
-    (inquilino_matches(param) + propiedad_matches(param)).uniq
+    renta_matches(param)
   end
 
-  def self.inquilino_matches(param)
-    matches('nombre', param)
-  end
+  def self.renta_matches(param)
+    pago = new.build_rentas
+  pago =  Rentas.search(param)
+ return Pago.joins(:rentas).where(rentas: pago)
 
-  def self.propiedads_matches(param)
-    matches('calle', param)
-  end
 
-  def self.matches(field_name, param)
-    where("#{field_name} like ?", "%#{param}%")
   end
 
 end

@@ -16,6 +16,23 @@ class Rentas < ActiveRecord::Base
   def to_label
     inquilino = Inquilino.find(inquilino_id).nombre
     propiedad = Propiedad.find(propiedad_id).nombre
-   "#{inquilino}, => ,  #{propiedad} "
+   "#{inquilino}, renta la propiedad:  #{propiedad} "
  end
+
+ def self.search(param)
+   return Rentas.none if param.blank?
+   (inquilino_matches(param) + propiedad_matches(param)).uniq
+ end
+
+ def self.inquilino_matches(param)
+   inq = Inquilino.search(param)
+   renta = Rentas.joins(:inquilino).where(inquilino: inq)
+ end
+
+ def self.propiedad_matches(param)
+   pro = Propiedad.search(param)
+   renta = Rentas.joins(:propiedad).where(propiedad: pro)
+
+ end
+
 end

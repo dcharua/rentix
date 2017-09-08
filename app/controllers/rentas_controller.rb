@@ -73,6 +73,16 @@ class RentasController < ApplicationController
     end
   end
 
+  def search
+    @rent = Rentas.search(params[:search_param])
+    if @rent
+      render partial: "lookup"
+    else
+       render status: :not_found, nothing: true
+    end
+  end
+
+
   private
   def set_renta
     @renta= Rentas.find(params[:id])
