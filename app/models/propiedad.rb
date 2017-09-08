@@ -6,6 +6,10 @@ class Propiedad < ActiveRecord::Base
 
   def idnt; "#{nombre} : #{calle} ##{numero}";end
 
+  def to_label
+   "#{nombre} : #{calle} ##{numero}"
+ end
+
   def self.search(param)
     return Propiedad.none if param.blank?
     (nombre_matches(param) + calle_matches(param)).uniq

@@ -90,6 +90,23 @@ text-align: center;
   margin: 0 20px;
 }
 
+.width100 {
+    width: 100% !important;
+}
+.select2 .select2-container .select2-container--default .select2-container--below{
+    width: auto !important;
+}
+
+.form-group .select2-container {
+  position: relative;
+  z-index: 2;
+  float: left;
+  width: 100%;
+  margin-bottom: 0;
+  display: table;
+  table-layout: fixed;
+}
+
 #nuevo_inquilino {
   display:none;
 }

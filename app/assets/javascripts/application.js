@@ -48,7 +48,7 @@
 //= require typehead/bootstrap3-typeahead.min.js
 //= require codemirror/codemirror.js
 //= require codemirror/mode/javascript/javascript.js
-
+//= require cocoon
 
 var hide_spinner = function(){
   $('#spinner').hide();
@@ -57,3 +57,24 @@ var hide_spinner = function(){
 var show_spinner = function(){
   $('#spinner').show();
 }
+
+$(function() {
+    $('.datepicker').datepicker({format: 'yyyy-mm-dd'});
+});
+
+$(function() {
+  $(".rentas_inquilino a.add_fields").
+    data("association-insertion-position", 'before').
+    data("association-insertion-node", 'this');
+
+  $('.rentas_inquilino').bind('cocoon:after-insert',
+     function() {
+       $(".rentas_inquilino_id").hide();
+       $(".inquilino a.add_fields").hide();
+     });
+  $('.rentas_inquilino').bind("cocoon:after-remove",
+     function() {
+       $(".rentas_inquilino_id").show();
+       $(".inquilino a.add_fields").show();
+     });
+});

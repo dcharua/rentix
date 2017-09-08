@@ -25,7 +25,7 @@
                       <li><a href="">Editar Perfil</a>
                       </li>
                       <li class="divider"></li>
-                      <li><%= link_to "Logout", destroy_user_session_path, method: :delete %>
+                      <li><%= link_to "Cerrar sesion", destroy_user_session_path, method: :delete %>
                       </li>
                   </ul>
               </div>
@@ -57,8 +57,16 @@
                 <ul class="nav nav-second-level collapse <%= is_active_controller('rentas', 'in') %>">
                     <li class="<%= is_active_action('index') %>"><%= link_to "Ver", rentas_path %></li>
                     <li class="<%= is_active_action('new') %>"><%= link_to "Agregar", new_renta_path %></li>
-            </li>
-        </ul>
+            </ul>
+        </li>
+
+        <li class="<%= is_active_controller('Pago') %>">
+            <a href=""><i class="fa fa-money"></i> <span class="nav-label" data-i18n="nav.pago">Pagos</span> <span class="fa arrow"></span></a>
+            <ul class="nav nav-second-level collapse <%= is_active_controller('pagos', 'in') %>">
+                <li class="<%= is_active_action('index') %>"><%= link_to "Ver", pagos_path %></li>
+                <li class="<%= is_active_action('new') %>"><%= link_to "Agregar", new_pago_path %></li>
+            </ul>
+        </li>
 
     </div>
 </nav>

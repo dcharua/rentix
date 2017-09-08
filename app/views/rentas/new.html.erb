@@ -1,18 +1,186 @@
-<div class="wrapper wrapper-content animated fadeInRight">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="ibox float-e-margins">
-                <div class="ibox-content text-center p-md">
-                    <h1>Puedes agregra una renta apartir de inquilinos y propiedades existientes o introduciendo
-                      nuevos datos </h1>
-                        <div class="row">
-                      <%= link_to "Existentes", existing_rentas_path , class:"btn btn-primary btn-lg center col-lg-6 margin", remote: true  %>
-                      <%= link_to "Nuevos", nuevo_rentas_path, class:" btn btn-primary btn-lg center col-lg-6 margin", remote: true  %>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox">
+            <div class="ibox-title">
+                <h5>Agrega una renta en 3 pasos</h5>
+            </div>
+            <div class="ibox-content">
+                <h2>
+                    Nueva Renta
+                </h2>
+                <p>
+                  Puedes agregar una renta selecionando un inquilino y porpiedad existentes, o introduciendo nuevos datos
+                </p>
+                <%= simple_form_for @renta, url: rentas_path, html: {id:"form", class: "wizard-big"} do |f| %>
+                <h1>Inquilino</h1>
+                <fieldset>
+                  <h4 class="rentas_inquilino">Seleciona un inquilino existente y haz click en "next"<h4/>
+                  <div class="form-group col-sm-12" id="tohide">
+                    <%= f.association :inquilino, :collection =>current_user.inquilinos.order(:nombre).all,  input_html: {class: "pais form-control width100"}%>
+                    <h4 class = "rentas_inquilino"> o Introduce nuevos datos<h4/>
+                    <%= link_to_add_association 'Nuevos datos', f, :inquilino, class: "btn btn-outline btn-primary", id: "btnhide"%>
+                  </div>
+                  </fieldset>
+
+                  <h1>Propiedad</h1>
+                  <fieldset>
+                    <h4 class="rentas_propiedad">Seleciona una propiedad existente y haz click en "next"<h4/>
+                    <div class="form-group col-sm-12" id= "tohide2">
+                      <%= f.association  :propiedad, :collection =>current_user.propiedads.order(:nombre).all,  input_html: {class: "pais2 form-control width100"}%>
+                        <h4 class = "rentas_propiedad"> o Introduce nuevos datos<h4/>
+                      <%= link_to_add_association 'Nueva propiedad', f, :propiedad, class: "btn btn-primary", id: "btnhide2"%>
                     </div>
-                </div>
+                  </fieldset>
+
+                  <h1>Renta</h1>
+                  <fieldset>
+                    <div class ="form-horizontal">
+                      <div class="form-group">
+                        <%= f.label :inicio, class: "col-md-2 control-label" %>
+                          <div class="col-md-4">
+                            <%= f.text_field :inicio, id: "datepicker", class:"datepicker form-control", required: true%>
+                          </div>
+                          <%= f.label :final, class: "col-md-2 control-label" %>
+                            <div class="col-md-4">
+                              <%= f.text_field :final, id: "datepicker", class:"datepicker form-control", required: true%>
+                            </div>
+                        </div>
+                      <div class="form-group">
+                        <%= f.label :costo, "Mensualidad", class: "col-md-2 control-label", required: true %>
+                          <div class="col-md-4">
+                            <%= f.number_field :costo %>
+                          </div>
+                          <%= f.label :dia, "Dia de pago", class: "col-md-2 control-label", required: true %>
+                            <div class="col-md-4">
+                              <%= f.number_field :dia %>
+                          </div>
+                        </div>
+
+                      <div class="hr-line-dashed"></div>
+                      <div class="form-group">
+                          <div class="col-sm-12 text-center">
+                              <%= f.submit 'Crear', class: 'btn btn-primary btn-lg center' %>
+                          </div>
+                      </div>
+                    </div>
+                </fieldset>
+                <% end %>
             </div>
         </div>
     </div>
-</div>
-<div id="existing"></div>
-<div id="nuevo"></div>
+
+
+
+
+
+<% content_for :javascript do %>
+
+<script type="text/javascript">
+
+
+$(function() {
+
+    $("#wizard").steps();
+    $("#form").steps({
+        bodyTag: "fieldset",
+        onStepChanging: function (event, currentIndex, newIndex) {
+            // Always allow going backward even if the current step contains invalid fields!
+            if (currentIndex > newIndex) {
+                return true;
+            }
+
+            // Forbid suppressing "Warning" step if the user is to young
+            if (newIndex === 3 && Number($("#age").val()) < 18) {
+                return false;
+            }
+
+            var form = $(this);
+
+            // Clean up if user went backward before
+            if (currentIndex < newIndex) {
+                // To remove error styles
+                $(".body:eq(" + newIndex + ") label.error", form).remove();
+                $(".body:eq(" + newIndex + ") .error", form).removeClass("error");
+            }
+
+            // Disable validation on fields that are disabled or hidden.
+            form.validate().settings.ignore = ":disabled,:hidden";
+
+            // Start validation; Prevent going forward if false
+            return form.valid();
+        },
+        onStepChanged: function (event, currentIndex, priorIndex) {
+            // Suppress (skip) "Warning" step if the user is old enough.
+            if (currentIndex === 2 && Number($("#age").val()) >= 18) {
+                $(this).steps("next");
+            }
+
+            // Suppress (skip) "Warning" step if the user is old enough and wants to the previous step.
+            if (currentIndex === 2 && priorIndex === 3) {
+                $(this).steps("previous");
+            }
+        },
+        onFinishing: function (event, currentIndex) {
+            var form = $(this);
+
+            // Disable validation on fields that are disabled.
+            // At this point it's recommended to do an overall check (mean ignoring only disabled fields)
+            form.validate().settings.ignore = ":disabled";
+
+            // Start validation; Prevent form submission if false
+            return form.valid();
+        },
+        onFinished: function (event, currentIndex) {
+            var form = $(this);
+
+            // Submit form input
+            form.submit();
+        }
+    }).validate({
+                errorPlacement: function (error, element) {
+                    element.before(error);
+                },
+                rules: {
+                    confirm: {
+                        equalTo: "#password"
+                    }
+                }
+            });
+$(".pais").select2();
+$(".pais2").select2();
+
+
+$('.datepicker').datepicker({format: 'yyyy-mm-dd'});
+
+
+$(function() {
+  $("#tohide a.add_fields").
+    data("association-insertion-position", 'before').
+    data("association-insertion-node", 'this');
+
+  $('#tohide').bind('cocoon:after-insert',
+     function() {
+       $(".rentas_inquilino").remove();
+       $("#btnhide").hide();
+     });
+
+     $("#tohide2 a.add_fields").
+       data("association-insertion-position", 'before').
+       data("association-insertion-node", 'this');
+
+   $('#tohide2').bind('cocoon:after-insert',
+      function() {
+        $(".rentas_propiedad").remove();
+        $("#btnhide2").hide();
+      });
+
+});
+
+});
+
+
+
+
+</script>
+
+<% end %>

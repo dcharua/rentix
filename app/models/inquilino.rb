@@ -9,4 +9,8 @@ class Inquilino < ActiveRecord::Base
     where("#{"nombre"} like ?", "%#{param}%")
   end
 
+  def to_label
+   "#{nombre}"
+ end
+
 end

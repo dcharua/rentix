@@ -17,14 +17,14 @@ $(document).ready(function() {
                     <div class="form-group">
                     <%= f.label :nombre, class: "col-md-2 control-label" %>
                         <div class="col-md-10">
-                          <%= f.text_field :nombre, class: "form-control", placeholder: "Nombre completo", autofocus: true %>
+                          <%= f.text_field :nombre, class: "form-control", placeholder: "Nombre completo", autofocus: true, required: true %>
                         </div>
                       </div>
                     <div class="form-group">
                     <%= f.label :nacimiento, 'Fecha de Nacimiento', class: "col-md-2 control-label" %>
                         <div class="col-md-4">
                             <span class="icono"><i class="fa fa-calendar"></i></span>
-                          <%= f.text_field :nacimiento, data:{ provide:'datepicker' }, class:"form-control-2"%>
+                            <%= f.text_field :nacimiento, id: "datepicker", class:"datepicker form-control-2"%>
                         </div>
                         <%= f.label :nacionalidad, 'Pais', class: "col-sm-2 control-label" %>
 

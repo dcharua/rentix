@@ -13,36 +13,20 @@ $(document).ready(function() {
         <div class="ibox float-e-margins">
             <div class="ibox-title">
                 <h5>Introduce los datos del inquilino</h5>
-                <div class="ibox-tools">
-                    <a class="collapse-link">
-                        <i class="fa fa-chevron-up"></i>
-                    </a>
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-wrench"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#">Config option 1</a>
-                        </li>
-                        <li><a href="#">Config option 2</a>
-                        </li>
-                    </ul>
-                    <a class="close-link">
-                        <i class="fa fa-times"></i>
-                    </a>
-                </div>
+
             </div>
             <div class="ibox-content">
                 <%= form_for(@inquilino, :html => {class: "form-horizontal", role: "form"}) do |f| %>
                     <div class="form-group"><%= f.label :nombre, class: "col-md-2 control-label" %>
                         <div class="col-md-10">
-                          <%= f.text_field :nombre, class: "form-control", placeholder: "Nombre completo", autofocus: true %>
+                          <%= f.text_field :nombre, class: "form-control", placeholder: "Nombre completo", autofocus: true, required: true %>
                         </div>
                       </div>
                     <div class="form-group">
                     <%= f.label :nacimiento, 'Fecha de Nacimiento', class: "col-md-2 control-label" %>
                         <div class="col-md-4">
                             <span class="icono"><i class="fa fa-calendar"></i></span>
-                          <%= f.text_field :nacimiento, data:{ provide:'datepicker' }, class:"form-control-2"%>
+                          <%= f.text_field :nacimiento, id: "datepicker", class:"datepicker form-control-2"%>
                         </div>
                         <%= f.label :nacionalidad, 'Pais', class: "col-sm-2 control-label" %>
 
@@ -74,18 +58,3 @@ $(document).ready(function() {
         </div>
     </div>
 </div>
-
-
-<% content_for :javascript do %>
-
-<script type="text/javascript">
-
-
-$(function() {
-
-
-});
-
-</script>
-
-<% end %>

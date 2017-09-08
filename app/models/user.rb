@@ -1,7 +1,9 @@
 class User < ActiveRecord::Base
   has_many :inquilinos
   has_many :propiedads
+  has_many :pagos
   has_many :rentas, class_name: "::Rentas", foreign_key: "user_id"
+
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

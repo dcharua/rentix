@@ -10,15 +10,22 @@ class RentasController < ApplicationController
 
   def new
       @renta = Rentas.new
-      @inquilino = Inquilino.new
   end
 
   def create
-    @inquilino = Inquilino.find(params[:rentas][:inquilino])
-    @propiedad = Propiedad.find(params[:rentas][:propiedad])
     @renta = Rentas.new(renta_params)
-    @renta.inquilino = @inquilino
-    @renta.propiedad = @propiedad
+    if !params[:rentas][:inquilino_id].present?
+      inquilino = Inquilino.new(inquilino_params)
+      inquilino.user = current_user
+      inquilino.save
+      @renta.inquilino = inquilino
+    end
+    if !params[:rentas][:propiedad_id].present?
+      propiedad = Propiedad.new(propiedad_params)
+      propiedad.user = current_user
+      propiedad.save
+      @renta.propiedad = propiedad
+    end
     @renta.user = current_user
     if @renta.save
       flash[:success] = "Se agregó la renta"
@@ -36,7 +43,6 @@ class RentasController < ApplicationController
       render 'edit'
     end
   end
-
 
 
   def show
@@ -79,7 +85,15 @@ class RentasController < ApplicationController
     end
   end
 
-  def renta_params
-    params.require(:rentas).permit(:costo, :inicio, :final)
+    def renta_params
+      params.require(:rentas).permit(:costo, :final, :inicio, :dia, :inquilino_id, :propiedad_id)
     end
-  end
+
+    def inquilino_params
+      params[:rentas].require(:inquilino_attributes).permit(:nombre, :nacimiento, :nacionalidad, :curp, :rfc)
+    end
+
+    def propiedad_params
+      params[:rentas].require(:propiedad_attributes).permit(:nombre, :calle, :colonia, :municipio, :numero, :numeroe, :cp, :estado)
+    end
+end

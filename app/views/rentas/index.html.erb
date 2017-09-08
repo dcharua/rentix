@@ -31,6 +31,7 @@
                                                     <td><strong>Mensualidad</strong></td>
                                                     <td><strong>Inicio</strong></td>
                                                     <td><strong>fin</strong></td>
+                                                    <td><strong>Dia de Pago</strong></td>
                                                     <td><strong>Acciones</strong></td>
                                                 </tr>
                                                 <%@rentas.each do |renta|%>
@@ -40,6 +41,7 @@
                                                   <td><%= renta.costo%></td>
                                                   <td> <%= renta.inicio%></td>
                                                   <td><%= renta.final%></td>
+                                                  <td><%= renta.dia%></td>
                                                   <td class="client-status">  <%= link_to "Editar", edit_renta_path(renta), class: "btn btn-xs btn-primary" %>
                                                     <%= link_to "Borrar", renta_path(renta), method: :delete,
                                                                                       data: { confirm: "¿Estas seguro que quieres borrar esta renta?"},

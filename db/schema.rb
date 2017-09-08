@@ -26,6 +26,18 @@ ActiveRecord::Schema.define(version: 20170831000107) do
 
   add_index "inquilinos", ["user_id"], name: "index_inquilinos_on_user_id"
 
+  create_table "pagos", force: :cascade do |t|
+    t.integer  "rentas_id"
+    t.integer  "monto"
+    t.date     "fecha"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "pagos", ["rentas_id"], name: "index_pagos_on_rentas_id"
+  add_index "pagos", ["user_id"], name: "index_pagos_on_user_id"
+
   create_table "propiedads", force: :cascade do |t|
     t.string   "nombre"
     t.string   "calle"
@@ -47,6 +59,7 @@ ActiveRecord::Schema.define(version: 20170831000107) do
     t.integer  "propiedad_id"
     t.date     "inicio"
     t.date     "final"
+    t.integer  "dia"
     t.integer  "costo"
     t.integer  "user_id"
     t.datetime "created_at",   null: false

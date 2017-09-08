@@ -27,39 +27,39 @@
                 <h1 class="logo-name">IN+</h1>
 
             </div>
-            <h3>Login</h3>
+            <h3>Ingresar</h3>
             <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
                 <div class="form-group">
                     <%= f.email_field :email, class: "form-control", placeholder: "Email" %>
                 </div>
                 <div class="form-group">
-                    <%= f.password_field :password, class: "form-control", placeholder: "Password" %>
+                    <%= f.password_field :password, class: "form-control", placeholder: "Contraseña" %>
                 </div>
 
                   <% if devise_mapping.rememberable? -%>
                     <div class="field">
                       <%= f.check_box :remember_me %>
-                      <%= f.label :remember_me %>
+                      <%= f.label :remember_me, "Recuerdame"  %>
                     </div>
                   <% end -%>
                   <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
-                    <%= link_to "Forgot your password?", new_password_path(resource_name),  class: "btn btn-sm btn-white btn-block" %><br />
+                    <%= link_to "Se te olvido tu contraseña?", new_password_path(resource_name),  class: "btn btn-sm btn-white btn-block" %><br />
                   <% end -%>
-                <%= f.submit "Log in", class: 'btn btn-primary block full-width m-b' %>
+                <%= f.submit "Ingresar", class: 'btn btn-primary block full-width m-b' %>
                 <div class="form-group">
 
                   <%- if devise_mapping.omniauthable? %>
                     <%- resource_class.omniauth_providers.each do |provider| %>
                       <%= link_to omniauth_authorize_path(resource_name, provider), class: 'btn btn-facebook btn btn-lg btn-block' do %>
                         <i class="fa fa-facebook fa-2x" ></i>
-                        Log in with facebook
+                        Continuar con Facebook
                       <% end %>
                     <% end -%>
                   <% end -%>
 
                   </div>
-                <p class="text-muted text-center"><small>New user?</small></p>
-                <%= link_to('Sign Up', new_user_registration_path, class: "btn btn-sm btn-white btn-block") %>
+                <p class="text-muted text-center"><small>Usuario nuevo?</small></p>
+                <%= link_to('Registarse', new_user_registration_path, class: "btn btn-sm btn-white btn-block") %>
             <% end %>
         </div>
     </div>

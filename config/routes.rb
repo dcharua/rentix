@@ -12,10 +12,14 @@ Rails.application.routes.draw do
   resources :inquilinos
   resources :propiedads
   resources :rentas
+  resources :pagos
 
   get "rentas/inq"
   get 'search_inquilinos', to: "inquilinos#search", :defaults => { :format => 'js' }
   get 'search_propiedads', to: "propiedads#search", :defaults => { :format => 'js' }
+  get 'search_rentas', to: "rentas#search", :defaults => { :format => 'js' }
+  get 'search_pagos', to: "pagos#search", :defaults => { :format => 'js' }
+  
   get 'existing_rentas', to: "rentas#existing", :defaults => { :format => 'js' }
   get 'nuevo_rentas', to: "rentas#nuevo", :defaults => { :format => 'js' }
   # Example of regular route:

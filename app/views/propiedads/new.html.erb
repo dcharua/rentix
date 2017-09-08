@@ -18,22 +18,22 @@ $(document).ready(function() {
                 <%= form_for(@propiedad, :html => {class: "form-horizontal", role: "form"}) do |f| %>
                     <div class="form-group"><%= f.label :nombre, 'Titulo', class: "col-md-2 control-label" %>
                         <div class="col-md-10">
-                          <%= f.text_field :nombre, class: "form-control", placeholder: "Escribe un titulo para identificar la propiedad", autofocus: true %>
+                          <%= f.text_field :nombre, class: "form-control", placeholder: "Escribe un titulo para identificar la propiedad", autofocus: true, required: true %>
                         </div>
                       </div>
 
                       <div class="hr-line-dashed"></div>
 
                     <div class="form-group">
-                    <%= f.label :calle, 'Calle', class: "col-md-2 control-label" %>
+                    <%= f.label :calle, 'Calle', class: "col-md-2 control-label", required: true %>
                         <div class="col-md-4">
                           <%= f.text_field :calle, class: "form-control", autofocus: true %>
                         </div>
-                        <%= f.label :numero, 'No.', class: "col-md-1 control-label" %>
+                        <%= f.label :numero, 'Numero', class: "col-md-1 control-label",required: true %>
                         <div class="col-md-2">
                           <%= f.text_field :numero, class: "form-control", autofocus: true %>
                         </div>
-                        <%= f.label :numero, 'Ext.', class: "col-md-1 control-label" %>
+                        <%= f.label :numero, 'Interior', class: "col-md-1 control-label" %>
                         <div class="col-md-2">
                           <%= f.text_field :numeroe, class: "form-control", autofocus: true %>
                         </div>
