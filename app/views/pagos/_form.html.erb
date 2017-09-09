@@ -1,12 +1,3 @@
-<script type="text/javascript">
-
-$(document).ready(function() {
-  $(".pais").select2();
-  language: "es"
-  $('.datepicker').datepicker({format: 'yyyy-mm-dd'});
-});
-</script>
-
 <div class="row">
     <div class="col-lg-12">
         <div class="ibox float-e-margins">
@@ -14,18 +5,24 @@ $(document).ready(function() {
                 <h5>Introduce los datos del nuevo Pago</h5>
             </div>
             <div class="ibox-content">
-              <%= simple_form_for @pago, html: {id:"form", class: "wizard-big"} do |f| %>
+              <%= simple_form_for @pago, html: {id:"form", class: "wizard-big form-horizontal", required: true} do |f| %>
                     <div class="form-group col-md-12">
-                      <%= f.association :rentas , :collection => Rentas.order(:inquilino_id),  input_html: {class: "pais form-control"}%>
+                      <%= f.association :rentas , :collection => rentas_activas.order(:inquilino_id),  input_html: {class: "pais form-control"}%>
                     </div>
                     <div class="form-group">
-                    <%= f.label :monto, 'Monto', class: "col-md-2 control-label" %>
+                    <%= f.label :monto, 'Monto', class: "col-md-2 control-label", required: true %>
                         <div class="col-md-4">
                           <%= f.number_field :monto %>
                         </div>
-                        <%= f.label :fecha, "Fecha del pago", class: "col-md-2 control-label" %>
+                        <%= f.label :fecha, "Fecha del pago", class: "col-md-2 control-label",  required: true %>
                           <div class="col-md-4">
                             <%= f.text_field :fecha, data:{ provide:'datepicker' }, class:"datepicker form-control", required: true%>
+                          </div>
+                    </div>
+                    <div class="form-group ">
+                      <%= f.label :mes, 'Correspondiente al mes', class: "col-md-5 control-label center", required: true %>
+                          <div class="col-md-4">
+                            <%= f.number_field :mes %>
                           </div>
                     </div>
                     <div class="hr-line-dashed"></div>

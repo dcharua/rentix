@@ -69,7 +69,7 @@ class PagosController < ApplicationController
   end
 
   def pago_params
-    params.require(:pago).permit(:monto, :fecha, :renta_id, :rentas_id)
+    params.require(:pago).permit(:monto, :fecha, :mes, :rentas_id)
   end
 
 end

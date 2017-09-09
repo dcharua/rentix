@@ -1,14 +1,107 @@
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
-        <div class="col-lg-12">
-            <div class="text-center m-t-lg">
-                <h1>
-                    <%= @mainTitle %>
-                </h1>
-                <small>
-                    <%= @mainDesc %>
-                </small>
-            </div>
+          <div class="col-md-4">
+              <div class="widget style1 navy-bg">
+                  <div class="row">
+                      <div class="col-xs-4">
+                          <i class="fa fa-users fa-5x"></i>
+                      </div>
+                      <div class="col-xs-8 text-right">
+                          <span> Total de Inquilinos</span>
+                          <h2 class="font-bold"><%=@inquilinos.count%></h2>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-4">
+              <div class="widget style1 lazur-bg">
+                  <div class="row">
+                      <div class="col-xs-4">
+                          <i class="fa fa-building fa-5x"></i>
+                      </div>
+                      <div class="col-xs-8 text-right">
+                          <span> Total de Propiedades</span>
+                          <h2 class="font-bold"><%= @propiedads.count%></h2>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-4">
+              <div class="widget style1 yellow-bg">
+                  <div class="row">
+                      <div class="col-xs-4">
+                          <i class="fa fa-handshake-o fa-5x"></i>
+                      </div>
+                      <div class="col-xs-8 text-right">
+                          <span> Rentas activas</span>
+                          <h2 class="font-bold"><%= rentas_activas.count%></h2>
+                      </div>
+                  </div>
+              </div>
+          </div>
         </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Pagos del mes</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <table class="table table-hover no-margins">
+                            <thead>
+                            <tr>
+                                <th>Estado</th>
+                                <th>Dia de Pago</th>
+                                <th>Inquilino</th>
+                                <th>Propiedad</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                              <%  if pagos_atrasados.size > 0  %>
+                              <%  pagos_atrasados.each do |at|  %>
+                              <%  if  at["id"].nil?  %>
+                              <tr>
+                                  <td><span class="label label-danger">Atrasado</span> </td>
+                                  <td><i class="fa fa-clock-o"></i> <%=at["dia"]%> </td>
+                                  <td> <%=get_inquilinos(at["inquilino_id"]).nombre %></td>
+                                  <td> <%=get_propiedads(at["propiedad_id"]).nombre%></td>
+                              </tr>
+                            <%end%>
+                            <%end%>
+                            <%end%>
+
+                              <%  if pagos_proximos.size > 0  %>
+                                <%  pagos_proximos.each do |pr|  %>
+                              <% if (pr["dia"] - 10) <= Time.now.strftime("%d").to_i && pr["id"].nil? %>
+                              <tr>
+                                  <td><span class="label label-warning">Proximo</span> </td>
+                                  <td><i class="fa fa-clock-o"></i> <%=pr["dia"]%> </td>
+                                  <td> <%=get_inquilinos(pr["inquilino_id"]).nombre %></td>
+                                  <td> <%=get_propiedads(pr["propiedad_id"]).nombre%></td>
+                              </tr>
+                              <%end%>
+                            <%end%>
+                            <%end%>
+                            <%  pagos_hechos.each do |hecho|  %>
+                            <tr>
+                                <td><span class="label label-primary">Pagado</span> </td>
+                                <td><i class="fa fa-clock-o"></i> <%=hecho.dia%> </td>
+                                <td> <%=get_inquilinos(hecho.inquilino_id).nombre %></td>
+                                <td> <%=get_propiedads(hecho.propiedad_id).nombre%></td>
+                            </tr>
+                            <%end%>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
     </div>
-</div>

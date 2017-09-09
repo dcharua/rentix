@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20170831000107) do
     t.integer  "rentas_id"
     t.integer  "monto"
     t.date     "fecha"
+    t.integer  "mes"
     t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

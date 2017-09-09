@@ -14,7 +14,7 @@
                               <td><strong>Propiedad</strong></td>
                               <td><strong>Monto</strong></td>
                               <td><strong>Fecha</strong></td>
-                              <td><strong>Regitrado en Sistema</strong></td>
+                              <td><strong>Mes</strong></td>
                               <td><strong>Acciones</strong></td>
                           </tr>
                           <% @pagos.each do |pago| %>
@@ -23,7 +23,7 @@
                             <td> <%= get_propiedads(pago.rentas.propiedad_id).nombre%></td>
                             <td><%= pago.monto%></td>
                             <td> <%= pago.fecha%></td>
-                            <td><%= pago.created_at%></td>
+                            <td><%= pago.mes%></td>
                             <td class="client-status">  <%= link_to "Editar", edit_pago_path(pago), class: "btn btn-xs btn-primary" %>
                               <%= link_to "Borrar", pago_path(pago), method: :delete,
                                                                 data: { confirm: "¿Estas seguro que quieres borrar a este pago?"},

@@ -62,6 +62,7 @@ $(function() {
     $('.datepicker').datepicker({format: 'yyyy-mm-dd'});
 });
 
+
 $(function() {
   $(".rentas_inquilino a.add_fields").
     data("association-insertion-position", 'before').

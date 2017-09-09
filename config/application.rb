@@ -21,7 +21,7 @@ module Myapp
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
     config.active_record.raise_in_transactional_callbacks = true
-    config.assets.precompile += [ 'inquilinos.css', 'propiedads.css', 'rentas.css', 'pagos.js' ]
+    config.assets.precompile += [ 'inquilinos.css', 'propiedads.css', 'rentas.css', 'pagos.css' ]
     config.assets.precompile += [  'inquilinos.js', 'propiedads.js', 'rentas.js', 'pagos.js']
   end
 end
