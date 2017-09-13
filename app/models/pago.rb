@@ -2,7 +2,6 @@ class Pago < ActiveRecord::Base
   belongs_to :rentas
   belongs_to :user
 
-  validates :monto, presence: true
 
   def self.search(param)
     return Pago.none if param.blank?

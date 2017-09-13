@@ -17,7 +17,7 @@ init_pago_lookup = function() {
   $('#pago-lookup-form').on('ajax:error', function(event, xhr, status, error){
     hide_spinner();
     $('#pago-lookup-results').replaceWith(' ');
-    $('#pago-lookup-errors').replaceWith('No se encontraron pagos.');
+    $('#pago-lookup-errors').replaceWith('La renta expíra antes de ese mes.');
   });
 }
 

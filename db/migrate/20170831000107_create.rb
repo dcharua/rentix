@@ -29,7 +29,6 @@ class Create < ActiveRecord::Migration
   create_table :rentas do |t|
       t.belongs_to :inquilino, index: true
       t.belongs_to :propiedad, index: true
-      t.date :inicio
       t.date :final
       t.integer :dia
       t.integer :costo
@@ -42,7 +41,8 @@ class Create < ActiveRecord::Migration
         t.belongs_to :rentas, index: true
         t.integer :monto
         t.date :fecha
-        t.integer :mes
+        t.date :mes
+        t.boolean :pagado, default: false, null: false
         t.references :user, index: true, foreign_key: true
 
         t.timestamps null: false

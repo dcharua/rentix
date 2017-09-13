@@ -24,11 +24,11 @@ module ApplicationHelper
     end
 
     def pagos_hechos
-      rentas_activas.joins(:pagos).select("inquilino_id, propiedad_id, dia").where(["pagos.mes == ?", Time.now.strftime("%m")])
+      rentas_activas.joins(:pagos).select("pagos.id as pid, inquilino_id, propiedad_id, dia, costo, monto, mes, rentas.created_at, rentas.id ").where(["strftime('%m', pagos.mes) >= ? AND pagado == ?", Time.now.strftime("%m"), true])
     end
 
     def pagos_atrasados
-    rentas_activas.joins("LEFT JOIN pagos ON rentas.id == rentas_id").select("pagos.id, inquilino_id, propiedad_id, dia").where("rentas.dia <	strftime('%d')")
+      rentas_activas.joins(:pagos).select("pagos.id as pid, inquilino_id, propiedad_id, dia, costo, mes, rentas.created_at, rentas.id").where(["strftime('%m', pagos.mes) == ? AND pagado == ?", Time.now.strftime("%m"), false])
     # sql = "SELECT pagos.id, inquilino_id, propiedad_id, dia
     #                               FROM          rentas
     #                               JOIN users    ON rentas.user_id == user.id
@@ -50,5 +50,26 @@ module ApplicationHelper
       #                               WHERE         rentas.dia > strftime('%d')
       #                               group by (rentas.id);"
       #                           records_array = ActiveRecord::Base.connection.execute(sql)
+    end
+
+    def rentas_por_vencer
+      time = Time.now + 2.month
+      current_user.rentas.where( "final < ? AND final > ? ", time, Time.now)
+    end
+
+    def getBalance(renta)
+      inicio = renta["created_at"].to_date
+      final = Time.now
+      inicio = inicio.change(day: renta["dia"])
+      meses = (final.year * 12 + final.month) - (inicio.year * 12 + inicio.month)
+      if inicio.day < final.day
+        meses = meses +1
+      end
+      return getTotalPagado(renta) - meses * renta["costo"]
+
+    end
+
+    def getTotalPagado(renta)
+     Rentas.joins(:pagos).where("rentas.id ==?",   renta.id ).sum(:monto)
     end
 end

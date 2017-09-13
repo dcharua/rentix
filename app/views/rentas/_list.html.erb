@@ -23,7 +23,7 @@
                             <td><%= get_inquilinos(renta.inquilino_id).nombre%></td>
                             <td> <%= get_propiedads(renta.propiedad_id).to_label%></td>
                             <td><%= renta.costo%></td>
-                            <td> <%= renta.inicio%></td>
+                            <td> <%= renta.created_at%></td>
                             <td><%= renta.final%></td>
                             <td><%= renta.dia%></td>
                             <td class="client-status">  <%= link_to "Editar", edit_renta_path(renta), class: "btn btn-xs btn-primary" %>

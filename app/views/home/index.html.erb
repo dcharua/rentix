@@ -1,32 +1,32 @@
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-3">
               <div class="widget style1 navy-bg">
                   <div class="row">
                       <div class="col-xs-4">
                           <i class="fa fa-users fa-5x"></i>
                       </div>
                       <div class="col-xs-8 text-right">
-                          <span> Total de Inquilinos</span>
+                          <span>Inquilinos</span>
                           <h2 class="font-bold"><%=@inquilinos.count%></h2>
                       </div>
                   </div>
               </div>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-3">
               <div class="widget style1 lazur-bg">
                   <div class="row">
                       <div class="col-xs-4">
                           <i class="fa fa-building fa-5x"></i>
                       </div>
                       <div class="col-xs-8 text-right">
-                          <span> Total de Propiedades</span>
+                          <span> Propiedades</span>
                           <h2 class="font-bold"><%= @propiedads.count%></h2>
                       </div>
                   </div>
               </div>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-3">
               <div class="widget style1 yellow-bg">
                   <div class="row">
                       <div class="col-xs-4">
@@ -35,6 +35,19 @@
                       <div class="col-xs-8 text-right">
                           <span> Rentas activas</span>
                           <h2 class="font-bold"><%= rentas_activas.count%></h2>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-3">
+              <div class="widget style1 red-bg">
+                  <div class="row">
+                      <div class="col-xs-4">
+                          <i class="fa fa-refresh fa-5x"></i>
+                      </div>
+                      <div class="col-xs-8 text-right">
+                          <span> Rentas a vencer</span>
+                          <h2 class="font-bold"><%= rentas_por_vencer.count%></h2>
                       </div>
                   </div>
               </div>
@@ -60,45 +73,79 @@
                             <tr>
                                 <th>Estado</th>
                                 <th>Dia de Pago</th>
+                                <th>Mes</th>
                                 <th>Inquilino</th>
                                 <th>Propiedad</th>
+                                <th>Mensualidad</th>
+                                <th>Monto</th>
+                                <th>Balance</th>
+                                <th>Acciones</th>
                             </tr>
                             </thead>
                             <tbody>
                               <%  if pagos_atrasados.size > 0  %>
                               <%  pagos_atrasados.each do |at|  %>
-                              <%  if  at["id"].nil?  %>
+                              <% if at["dia"] <  Time.now.strftime("%d").to_i %>
                               <tr>
                                   <td><span class="label label-danger">Atrasado</span> </td>
                                   <td><i class="fa fa-clock-o"></i> <%=at["dia"]%> </td>
+                                  <td> <%=at["mes"].to_date.month%></td>
                                   <td> <%=get_inquilinos(at["inquilino_id"]).nombre %></td>
                                   <td> <%=get_propiedads(at["propiedad_id"]).nombre%></td>
+                                  <td> <%=at["costo"]%></td>
+                                  <td> N.E</td>
+                                  <td> <%=getBalance(at)%></td>
+                                  <td><%= link_to "Pagar", edit_pago_path(at["pid"]), class: "btn btn-xs btn-primary" %></td>
                               </tr>
-                            <%end%>
-                            <%end%>
-                            <%end%>
+                                <%end%>
 
-                              <%  if pagos_proximos.size > 0  %>
-                                <%  pagos_proximos.each do |pr|  %>
-                              <% if (pr["dia"] - 10) <= Time.now.strftime("%d").to_i && pr["id"].nil? %>
+                              <% if (at["dia"] -10)  <=  Time.now.strftime("%d").to_i && at["dia"] > Time.now.strftime("%d").to_i %>
                               <tr>
                                   <td><span class="label label-warning">Proximo</span> </td>
-                                  <td><i class="fa fa-clock-o"></i> <%=pr["dia"]%> </td>
-                                  <td> <%=get_inquilinos(pr["inquilino_id"]).nombre %></td>
-                                  <td> <%=get_propiedads(pr["propiedad_id"]).nombre%></td>
+                                  <td><i class="fa fa-clock-o"></i> <%=at["dia"]%> </td>
+                                  <td> <%=at["mes"].to_date.month%></td>
+                                  <td> <%=get_inquilinos(at["inquilino_id"]).nombre %></td>
+                                  <td> <%=get_propiedads(at["propiedad_id"]).nombre%></td>
+                                  <td> <%=at["costo"]%></td>
+                                  <td> N.E</td>
+                                  <td> <%=getBalance(at)%></td>
+
+                                  <td><%= link_to "Pagar", edit_pago_path(at["pid"]), class: "btn btn-xs btn-primary" %></td>
                               </tr>
-                              <%end%>
+                            <%end%>
                             <%end%>
                             <%end%>
                             <%  pagos_hechos.each do |hecho|  %>
                             <tr>
-                                <td><span class="label label-primary">Pagado</span> </td>
+                              <% if hecho["monto"] < hecho["costo"]%>
+                                <td><span class="label label-success">Parcial</span> </td>
                                 <td><i class="fa fa-clock-o"></i> <%=hecho.dia%> </td>
+                                <td> <%=hecho["mes"].to_date.month%></td>
                                 <td> <%=get_inquilinos(hecho.inquilino_id).nombre %></td>
                                 <td> <%=get_propiedads(hecho.propiedad_id).nombre%></td>
+                                <td> <%=hecho["costo"]%></td>
+                                <td> <%=hecho["monto"]%></td>
+                                <td> <%=getBalance(hecho)%></td>
+                                <td><%= link_to "Borrar", pago_path(hecho["pid"]), method: :delete,
+                                                                  data: { confirm: "¿Estas seguro que quieres borrar este pago?"},
+                                                                  class: "btn btn-xs btn-danger" %></td>
                             </tr>
-                            <%end%>
 
+                                <% else%>
+                                <td><span class="label label-primary">Pagado</span> </td>
+                                <td><i class="fa fa-clock-o"></i> <%=hecho.dia%> </td>
+                                <td> <%=hecho["mes"].to_date.month%></td>
+                                <td> <%=get_inquilinos(hecho.inquilino_id).nombre %></td>
+                                <td> <%=get_propiedads(hecho.propiedad_id).nombre%></td>
+                                <td> <%=hecho["costo"]%></td>
+                                <td> <%=hecho["monto"]%></td>
+                                <td> <%=getBalance(hecho)%></td>
+                                <td><%= link_to "Borrar", pago_path(hecho["pid"]), method: :delete,
+                                                                  data: { confirm: "¿Estas seguro que quieres borrar este pago?"},
+                                                                  class: "btn btn-xs btn-danger" %></td>
+                            </tr>
+                              <%end%>
+                            <%end%>
                             </tbody>
                         </table>
                     </div>

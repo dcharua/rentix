@@ -4,7 +4,7 @@ class Rentas < ActiveRecord::Base
   belongs_to :user
   has_many :pagos
 
-  validates :inicio, presence: true
+
   validates :final, presence: true
   validates :user_id, presence: true
   validates :inquilino_id, presence: true
@@ -16,7 +16,7 @@ class Rentas < ActiveRecord::Base
   def to_label
     inquilino = Inquilino.find(inquilino_id).nombre
     propiedad = Propiedad.find(propiedad_id).nombre
-   "#{inquilino}, renta la propiedad:  #{propiedad} "
+   "#{propiedad} rentada por #{inquilino}"
  end
 
  def self.search(param)

@@ -27,7 +27,16 @@ class RentasController < ApplicationController
       @renta.propiedad = propiedad
     end
     @renta.user = current_user
+
     if @renta.save
+      time = Time.now
+      loop do
+        pago = Pago.new({ :mes => time, :rentas_id => @renta.id, :pagado => false})
+        pago.user = current_user
+        pago.save
+        time = time + 1.month
+      break if @renta.final < time
+    end
       flash[:success] = "Se agregó la renta"
       redirect_to rentas_path
     else
@@ -54,7 +63,9 @@ class RentasController < ApplicationController
   end
 
   def destroy
+    # borrar pagos
     @renta.destroy
+    p
     flash[:danger] = "La renta fue eliminada"
     redirect_to rentas_path
   end
@@ -96,7 +107,7 @@ class RentasController < ApplicationController
   end
 
     def renta_params
-      params.require(:rentas).permit(:costo, :final, :inicio, :dia, :inquilino_id, :propiedad_id)
+      params.require(:rentas).permit(:costo, :final, :dia, :inquilino_id, :propiedad_id)
     end
 
     def inquilino_params

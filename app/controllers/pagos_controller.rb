@@ -5,7 +5,7 @@ class PagosController < ApplicationController
   protect_from_forgery except: :search
 
   def index
-    @pagos = current_user.pagos.all
+    @pagos = current_user.pagos.where("pagos.pagado = ?", true)
     @actualizado = current_user.pagos.maximum('updated_at')
   end
 
@@ -22,6 +22,20 @@ class PagosController < ApplicationController
     else
       render 'new'
     end
+  end
+
+  def nuevo
+
+  end
+
+  def crear
+    @pago = Pago.where(["rentas_id == ? AND cast(strftime('%Y', mes) as int) = ? AND cast(strftime('%m', mes) as int) = ?", params[:rentas], params[:mes]["fecha(1i)"].to_i, params[:mes]["fecha(2i)"].to_i]).first
+    if @pago
+      render partial: "form"
+    else
+      render status: :not_found, nothing: true
+   end
+
   end
 
   def update
@@ -51,9 +65,9 @@ class PagosController < ApplicationController
   end
 
   def destroy
-    @pago.destroy
+    @pago.update({:fecha => nil, :monto => nil, :pagado => false} )
     flash[:danger] = "El pago fue eliminado"
-    redirect_to pagos_path
+    redirect_to root_path
   end
 
   private
@@ -69,7 +83,7 @@ class PagosController < ApplicationController
   end
 
   def pago_params
-    params.require(:pago).permit(:monto, :fecha, :mes, :rentas_id)
+    params.require(:pago).permit(:monto, :fecha, :mes, :rentas_id, :pagado)
   end
 
 end

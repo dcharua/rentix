@@ -26,7 +26,7 @@
                   <fieldset>
                     <h4 class="rentas_propiedad">Seleciona una propiedad existente y haz click en "next"<h4/>
                     <div class="form-group col-sm-12" id= "tohide2">
-                      <%= f.association  :propiedad, :collection =>current_user.propiedads.order(:nombre).all,  input_html: {class: "pais2 form-control width100"}%>
+                      <%= f.association  :propiedad, :collection =>current_user.propiedads.order(:nombre).all,  input_html: {class: "pais2 form-control", style: "width: 100%"}%>
                         <h4 class = "rentas_propiedad"> o Introduce nuevos datos<h4/>
                       <%= link_to_add_association 'Nueva propiedad', f, :propiedad, class: "btn btn-primary", id: "btnhide2"%>
                     </div>
@@ -36,10 +36,6 @@
                   <fieldset>
                     <div class ="form-horizontal">
                       <div class="form-group">
-                        <%= f.label :inicio, class: "col-md-2 control-label" %>
-                          <div class="col-md-4">
-                            <%= f.text_field :inicio, id: "datepicker", class:"datepicker form-control", required: true%>
-                          </div>
                           <%= f.label :final, class: "col-md-2 control-label" %>
                             <div class="col-md-4">
                               <%= f.text_field :final, id: "datepicker", class:"datepicker form-control", required: true%>

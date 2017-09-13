@@ -1,7 +1,7 @@
 <div id="rentas-lookup">
   <div class="input-group">
     <%= form_tag search_rentas_path, remote: true, method: :get, id: 'rentas-lookup-form' do %>
-      <%= text_field_tag :search_param, params[:search_param], placeholder: "Busca rentas por inquilino o propiedad", autofocus: true,
+      <%= text_field_tag :search_param, params[:search_param], placeholder: "Por inquilino o propiedad", autofocus: true,
         class: 'input form-control' %>
         <span class="input-group-btn">
           <%= button_tag(type: :submit, class: "btn btn btn-primary") do %>
@@ -32,7 +32,7 @@
                     <td><%= get_inquilinos(renta.inquilino_id).nombre%></td>
                     <td> <%= get_propiedads(renta.propiedad_id).nombre%></td>
                     <td><%= renta.costo%></td>
-                    <td> <%= renta.inicio%></td>
+                    <td> <%= renta.created_at%></td>
                     <td><%= renta.final%></td>
                     <td><%= renta.dia%></td>
                     <td class="client-status">  <%= link_to "Editar", edit_renta_path(renta), class: "btn btn-xs btn-primary" %>

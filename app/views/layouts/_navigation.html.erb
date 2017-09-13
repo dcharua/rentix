@@ -64,7 +64,7 @@
             <a href=""><i class="fa fa-money"></i> <span class="nav-label" data-i18n="nav.pago">Pagos</span> <span class="fa arrow"></span></a>
             <ul class="nav nav-second-level collapse <%= is_active_controller('pagos', 'in') %>">
                 <li class="<%= is_active_action('index') %>"><%= link_to "Ver", pagos_path %></li>
-                <li class="<%= is_active_action('new') %>"><%= link_to "Agregar", new_pago_path %></li>
+                <li class="<%= is_active_action('nuevo') %>"><%= link_to "Agregar", pagos_nuevo_path %></li>
             </ul>
         </li>
 

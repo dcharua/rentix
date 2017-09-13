@@ -30,7 +30,8 @@ ActiveRecord::Schema.define(version: 20170831000107) do
     t.integer  "rentas_id"
     t.integer  "monto"
     t.date     "fecha"
-    t.integer  "mes"
+    t.date     "mes"
+    t.boolean  "pagado"
     t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -58,7 +59,6 @@ ActiveRecord::Schema.define(version: 20170831000107) do
   create_table "rentas", force: :cascade do |t|
     t.integer  "inquilino_id"
     t.integer  "propiedad_id"
-    t.date     "inicio"
     t.date     "final"
     t.integer  "dia"
     t.integer  "costo"
