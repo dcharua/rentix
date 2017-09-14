@@ -20,7 +20,7 @@ Myapp::Application.configure do
   # config.action_dispatch.rack_cache = true
 
   # Disable Rails's static asset server (Apache or nginx will already do this).
-  config.serve_static_assets = false
+  cconfig.serve_static_files = false
 
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
@@ -78,5 +78,5 @@ Myapp::Application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
-  config.actionmailer.defaulturl_options = { :host => 'http://www.clashprogress.com' } 
+  config.action_mailer.defaulturl_options = { :host => 'https://mysterious-fortress-36494.herokuapp.com' }
 end

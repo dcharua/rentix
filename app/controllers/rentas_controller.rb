@@ -5,7 +5,6 @@ class RentasController < ApplicationController
   def index
     @rentas = current_user.rentas.all
     @actualizado = current_user.rentas.maximum('updated_at')
-
   end
 
   def new

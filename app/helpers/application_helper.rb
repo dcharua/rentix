@@ -66,10 +66,19 @@ module ApplicationHelper
         meses = meses +1
       end
       return getTotalPagado(renta) - meses * renta["costo"]
-
     end
 
     def getTotalPagado(renta)
      Rentas.joins(:pagos).where("rentas.id ==?",   renta.id ).sum(:monto)
     end
+
+    def getIngreso(mes)
+      fecha = Date.new(Time.now.year, mes, 28)
+      current_user.rentas.where( "final > ? AND created_at < ?", fecha, fecha).sum(:costo)
+    end
+
+    def getIngresoReal(mes)
+      current_user.rentas.joins(:pagos).where("strftime('%m', pagos.mes) == ?", mes).sum(:monto)
+    end
+
 end
