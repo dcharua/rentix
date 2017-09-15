@@ -21,6 +21,7 @@ module ApplicationHelper
 
     def rentas_activas
      current_user.rentas.where( "final::date > ?", DateTime.now.to_date)
+
     end
 
     def pagos_hechos
@@ -74,7 +75,7 @@ module ApplicationHelper
     end
 
     def getTotalPagado(renta)
-     Rentas.joins(:pagos).where("rentas.id ==?",   renta.id ).sum(:monto)
+     Rentas.joins(:pagos).where("rentas.id =?",   renta.id ).sum(:monto)
     end
 
     def getIngreso(mes)
