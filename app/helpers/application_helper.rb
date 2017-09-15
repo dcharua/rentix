@@ -20,7 +20,7 @@ module ApplicationHelper
     end
 
     def rentas_activas
-     current_user.rentas.where( "final > ? ", Time.now)
+     current_user.rentas.where( "final::date > ? ", Time.now)
     end
 
     def pagos_hechos
@@ -59,7 +59,7 @@ module ApplicationHelper
 
     def rentas_por_vencer
       time = Time.now + 2.month
-      current_user.rentas.where( "final < ? AND final > ? ", time, Time.now)
+      current_user.rentas.where( "final::date < ? AND final::date > ? ", time, Time.now)
     end
 
     def getBalance(renta)
