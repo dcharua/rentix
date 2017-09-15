@@ -1,4 +1,4 @@
-class RentasController < ApplicationController
+  class RentasController < ApplicationController
   before_action :set_renta, only: [:edit, :update, :show, :destroy]
   before_action :require_same_user, only: [:edit, :update, :destroy]
 
