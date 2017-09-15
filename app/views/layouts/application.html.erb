@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>INSPINIA</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+
 
     <!-- Include style per-controller - vendor plugins -->
     <%= stylesheet_link_tag params[:controller] if ::Rails.application.assets.find_asset("#{params[:controller]}.css") %>
@@ -12,6 +14,8 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
 
     <!-- Main javascript files -->
+    <%= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %>
+
 
     <%= javascript_include_tag :application %>
     <%= csrf_meta_tags %>
