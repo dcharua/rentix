@@ -54,9 +54,7 @@
         pago.user = current_user
         pago.save
         time = time + 1.month
-      end
       break if @renta.final < time
-
       flash[:success] = "Los datos fueron actualizados"
       redirect_to rentas_path(params[:id])
     else
