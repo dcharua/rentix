@@ -1,4 +1,4 @@
-class PropiedadsController < ApplicationController
+  class PropiedadsController < ApplicationController
   before_action :set_propiedad, only: [:edit, :update, :show, :destroy]
   before_action :require_same_user, only: [:edit, :update, :destroy]
   def index
@@ -68,5 +68,5 @@ class PropiedadsController < ApplicationController
   def propiedad_params
     params.require(:propiedad).permit(:nombre, :calle, :colonia, :municipio, :numero, :numeroe, :cp, :estado)
   end
-  
+
 end
