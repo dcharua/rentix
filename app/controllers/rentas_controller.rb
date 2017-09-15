@@ -44,7 +44,19 @@
   end
 
   def update
+    tmp = @renta.final
+    time = Time.now
+
     if @renta.update(renta_params)
+      loop do
+        if !@renta.pagos.where("extract(month from mes) = ?", time.month).exists?
+        pago = Pago.new({ :mes => time, :rentas_id => @renta.id, :pagado => false})
+        pago.user = current_user
+        pago.save
+        time = time + 1.month
+      end
+      break if @renta.final < time
+
       flash[:success] = "Los datos fueron actualizados"
       redirect_to rentas_path(params[:id])
     else
