@@ -20,7 +20,7 @@ module ApplicationHelper
     end
 
     def rentas_activas
-     current_user.rentas.where( "final::date > ? ", Time.now)
+     current_user.rentas.where( "final::date > ?", DateTime.now.to_date)
     end
 
     def pagos_hechos
