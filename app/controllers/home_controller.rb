@@ -39,6 +39,8 @@ class HomeController < ApplicationController
   end
 
   def getIngresoReal(mes)
-    current_user.rentas.joins(:pagos).where("strftime('%m', pagos.mes) == ?", mes).sum(:monto)
+    #current_user.rentas.joins(:pagos).where("strftime('%m', pagos.mes) == ?", mes).sum(:monto)
+    current_user.rentas.joins(:pagos).where("extract(month form pagos.mes) == ?", mes).sum(:monto)
+
   end
 end
