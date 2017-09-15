@@ -45,7 +45,7 @@ module ApplicationHelper
 
     def pagos_proximos
       #rentas_activas.joins("LEFT JOIN pagos ON rentas.id == rentas_id").select("pagos.id, inquilino_id, propiedad_id, dia").where("rentas.dia >=	strftime('%d')")
-             rentas_activas.joins("LEFT JOIN pagos ON rentas.id == rentas_id").select("pagos.id, inquilino_id, propiedad_id, dia").where("rentas.dia >=	extract(day form rentas.dia)")
+             rentas_activas.joins("LEFT JOIN pagos ON rentas.id == rentas_id").select("pagos.id, inquilino_id, propiedad_id, dia").where("rentas.dia >=	extract(day from rentas.dia)")
 
       #rentas_activas.joins(:pagos).select("pagos.id AS pago, inquilino_id, propiedad_id, dia").where("rentas.dia >=	strftime('%d') ")
       # sql = "SELECT pagos.id, inquilino_id, propiedad_id, dia
