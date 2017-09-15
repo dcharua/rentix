@@ -30,7 +30,7 @@ class PagosController < ApplicationController
 
   def crear
     #@pago = Pago.where(["rentas_id = ? AND cast(strftime('%Y', mes) as int) = ? AND cast(strftime('%m', mes) as int) = ?", params[:rentas], params[:mes]["fecha(1i)"].to_i, params[:mes]["fecha(2i)"].to_i]).first
-    @pago = Pago.where(["rentas_id = ? AND cast(extract(month from mes) as int) = ? AND cast(extract(month from mes) as int) = ?", params[:rentas], params[:mes]["fecha(1i)"].to_i, params[:mes]["fecha(2i)"].to_i]).first
+    @pago = Pago.where(["rentas_id = ? AND extract(month from mes)::integer = ? AND extract(month from mes)::integer = ?", params[:rentas], params[:mes]["fecha(1i)"].to_i, params[:mes]["fecha(2i)"].to_i]).first
 
     if @pago
       render partial: "form"
