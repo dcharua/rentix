@@ -25,13 +25,13 @@ module ApplicationHelper
 
     def pagos_hechos
       #rentas_activas.joins(:pagos).select("pagos.id as pid, inquilino_id, propiedad_id, dia, costo, monto, mes, rentas.created_at, rentas.id ").where(["strftime('%m', pagos.mes) >= ? AND pagado == ?", Time.now.strftime("%m"), true])
-            rentas_activas.joins(:pagos).select("pagos.id as pid, inquilino_id, propiedad_id, dia, costo, monto, mes, rentas.created_at, rentas.id ").where(["extract(month from pagos.mes) >= ? AND pagado == ?", Time.now.strftime("%m"), true])
+            rentas_activas.joins(:pagos).select("pagos.id as pid, inquilino_id, propiedad_id, dia, costo, monto, mes, rentas.created_at, rentas.id ").where(["extract(month from pagos.mes) >= ? AND pagado = ?", Time.now.strftime("%m"), true])
 
     end
 
     def pagos_atrasados
       #rentas_activas.joins(:pagos).select("pagos.id as pid, inquilino_id, propiedad_id, dia, costo, mes, rentas.created_at, rentas.id").where(["strftime('%m', pagos.mes) == ? AND pagado == ?", Time.now.strftime("%m"), false])
-         rentas_activas.joins(:pagos).select("pagos.id as pid, inquilino_id, propiedad_id, dia, costo, mes, rentas.created_at, rentas.id").where(["extract(month from pagos.mes) == ? AND pagado == ?", Time.now.strftime("%m"), false])
+         rentas_activas.joins(:pagos).select("pagos.id as pid, inquilino_id, propiedad_id, dia, costo, mes, rentas.created_at, rentas.id").where(["extract(month from pagos.mes) = ? AND pagado = ?", Time.now.strftime("%m"), false])
 
     # sql = "SELECT pagos.id, inquilino_id, propiedad_id, dia
     #                               FROM          rentas
@@ -45,7 +45,7 @@ module ApplicationHelper
 
     def pagos_proximos
       #rentas_activas.joins("LEFT JOIN pagos ON rentas.id == rentas_id").select("pagos.id, inquilino_id, propiedad_id, dia").where("rentas.dia >=	strftime('%d')")
-             rentas_activas.joins("LEFT JOIN pagos ON rentas.id == rentas_id").select("pagos.id, inquilino_id, propiedad_id, dia").where("rentas.dia >=	extract(day from rentas.dia)")
+             rentas_activas.joins("LEFT JOIN pagos ON rentas.id = rentas_id").select("pagos.id, inquilino_id, propiedad_id, dia").where("rentas.dia >=	extract(day from rentas.dia)")
 
       #rentas_activas.joins(:pagos).select("pagos.id AS pago, inquilino_id, propiedad_id, dia").where("rentas.dia >=	strftime('%d') ")
       # sql = "SELECT pagos.id, inquilino_id, propiedad_id, dia
@@ -84,7 +84,7 @@ module ApplicationHelper
 
     def getIngresoReal(mes)
       #current_user.rentas.joins(:pagos).where("strftime('%m', pagos.mes) == ?", mes).sum(:monto)
-      current_user.rentas.joins(:pagos).where("extract(month from pagos.mes) == ?", mes).sum(:monto)
+      current_user.rentas.joins(:pagos).where("extract(month from pagos.mes) = ?", mes).sum(:monto)
 
       # extract(year from date) = ? and extract(month from date) = ?", y, m)
     end
