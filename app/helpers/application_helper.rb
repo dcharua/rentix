@@ -31,7 +31,7 @@ module ApplicationHelper
 
     def pagos_atrasados
       #rentas_activas.joins(:pagos).select("pagos.id as pid, inquilino_id, propiedad_id, dia, costo, mes, rentas.created_at, rentas.id").where(["strftime('%m', pagos.mes) == ? AND pagado == ?", Time.now.strftime("%m"), false])
-         rentas_activas.joins(:pagos).select("pagos.id as pid, inquilino_id, propiedad_id, dia, costo, mes, rentas.created_at, rentas.id").where([extract(month from pagos.mes) == ? AND pagado == ?", Time.now.strftime("%m"), false])
+         rentas_activas.joins(:pagos).select("pagos.id as pid, inquilino_id, propiedad_id, dia, costo, mes, rentas.created_at, rentas.id").where(["extract(month from pagos.mes) == ? AND pagado == ?", Time.now.strftime("%m"), false])
 
     # sql = "SELECT pagos.id, inquilino_id, propiedad_id, dia
     #                               FROM          rentas
