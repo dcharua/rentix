@@ -39,7 +39,7 @@ class PropiedadsController < ApplicationController
   end
 
   def search
-    @pro = Propiedad.search(params[:search_param])
+    @pro = current_user.propiedads.search(params[:search_param])
     if @pro
       render partial: "lookup"
     else
@@ -68,5 +68,5 @@ class PropiedadsController < ApplicationController
   def propiedad_params
     params.require(:propiedad).permit(:nombre, :calle, :colonia, :municipio, :numero, :numeroe, :cp, :estado)
   end
-  
+
 end

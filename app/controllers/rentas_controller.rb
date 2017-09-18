@@ -1,5 +1,5 @@
 class RentasController < ApplicationController
-  before_action :set_renta, only: [:edit, :update, :show, :destroy]
+  before_action :set_renta, only: [:edit, :update, :show, :destroy, :terminar]
   before_action :require_same_user, only: [:edit, :update, :destroy]
 
   def index
@@ -44,9 +44,23 @@ class RentasController < ApplicationController
     end
   end
 
+
+
   def update
+    tmp = @renta.final
+    time = Time.now
+
     if @renta.update(renta_params)
-      flash[:success] = "Los datos fueron actualizados"
+      loop do
+        if @renta.pagos.where("strftime('%Y-%m', mes) = ?", time.strftime("%Y-%m")).blank?
+          pago = Pago.new({ :mes => time, :rentas_id => @renta.id, :pagado => false})
+          pago.user = current_user
+          pago.save
+        end
+        time = time + 1.month
+        break if @renta.final < time
+      end
+        flash[:success] = "Se edito la renta"
       redirect_to rentas_path(params[:id])
     else
       render 'edit'
@@ -62,10 +76,19 @@ class RentasController < ApplicationController
 
   end
 
+  def terminar
+    @renta.final = Time.now
+    if @renta.save
+      flash[:success] = "Se termino la renta"
+    else
+      flash[:danger] = "Un error no permitio terminar la renta"
+    end
+      redirect_to rentas_path
+  end
+
   def destroy
     # borrar pagos
     @renta.destroy
-    p
     flash[:danger] = "La renta fue eliminada"
     redirect_to rentas_path
   end
@@ -85,7 +108,7 @@ class RentasController < ApplicationController
   end
 
   def search
-    @rent = Rentas.search(params[:search_param])
+    @rent = current_user.rentas.search(params[:search_param])
     if @rent
       render partial: "lookup"
     else
@@ -96,7 +119,7 @@ class RentasController < ApplicationController
 
   private
   def set_renta
-    @renta= Rentas.find(params[:id])
+    @renta = Rentas.find(params[:id])
   end
 
   def require_same_user

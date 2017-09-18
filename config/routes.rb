@@ -8,7 +8,10 @@ Rails.application.routes.draw do
 
   get "home/index"
   get "home/minor"
+  get "search_all", to: "home#search"
   get 'pagos/nuevo', to: "pagos#nuevo"
+  get 'rentas/:id/terminar', to: "rentas#terminar", as: "rentas_terminar"
+
 
   resources :inquilinos
   resources :propiedads

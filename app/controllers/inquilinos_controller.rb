@@ -42,7 +42,7 @@ class InquilinosController < ApplicationController
   end
 
   def search
-    @inq = Inquilino.search(params[:search_param])
+    @inq = current_user.inquilinos.search(params[:search_param])
     if @inq
       render partial: "lookup"
     else
@@ -71,5 +71,5 @@ class InquilinosController < ApplicationController
   def inquilino_params
     params.require(:inquilino).permit(:nombre, :nacimiento, :nacionalidad, :curp, :rfc)
   end
-  
+
 end

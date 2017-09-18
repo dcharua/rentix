@@ -2,7 +2,7 @@ class Rentas < ActiveRecord::Base
   belongs_to :inquilino
   belongs_to :propiedad
   belongs_to :user
-  has_many :pagos
+  has_many :pagos, dependent: :destroy
 
 
   validates :final, presence: true

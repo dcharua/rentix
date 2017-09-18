@@ -114,3 +114,24 @@ text-align: center;
 .hidden{
   visibility: hidden !important;
 }
+.white{
+  color: white !important;
+}
+
+.white ::-webkit-input-placeholder  { /* WebKit, Blink, Edge */
+    color: white !important;
+}
+.white :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+     color: white !important;
+   opacity:  1;
+}
+.white::-moz-placeholder { /* Mozilla Firefox 19+ */
+     color: white !important;
+   opacity:  1;
+}
+.white:-ms-input-placeholder  { /* Internet Explorer 10-11 */
+  color: white !important;
+}
+.white::-ms-input-placeholder { /* Microsoft Edge */
+     color: white !important;
+}
