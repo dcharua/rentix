@@ -8,12 +8,16 @@ class Pago < ActiveRecord::Base
     renta_matches(param)
   end
 
-  def self.renta_matches(param)
-    pago = new.build_rentas
-  pago =  Rentas.search(param)
- return Pago.joins(:rentas).where(rentas: pago)
 
+ def self.search(param)
+   return Pago.none if param.blank?
+   (renta_matches(param)).uniq
+ end
 
-  end
+ def self.renta_matches(param)
+   renta = Rentas.search(param)
+   pago = Pago.joins(:rentas).where(rentas: renta)
+   pago.where(pagado: true)
+ end
 
 end

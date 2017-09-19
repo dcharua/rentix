@@ -10,6 +10,6 @@ def search
   @ren =  current_user.rentas.search(params[:search_param])
   @pro = current_user.propiedads.search(params[:search_param])
   @inq =  current_user.inquilinos.search(params[:search_param])
-
+  @pag = current_user.pagos.search(params[:search_param])
   end
 end

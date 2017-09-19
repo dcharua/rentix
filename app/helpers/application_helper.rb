@@ -23,6 +23,10 @@ module ApplicationHelper
      current_user.rentas.where( "final > ? ", Time.now)
     end
 
+    def rentas_terminadas
+     current_user.rentas.where( "final < ? ", Time.now)
+    end
+
     def pagos_hechos
       rentas_activas.joins(:pagos).select("pagos.id as pid, inquilino_id, propiedad_id, dia, costo, monto, mes, rentas.created_at, rentas.id ").where(["strftime('%m', pagos.mes) >= ? AND pagado == ?", Time.now.strftime("%m"), true])
     end
