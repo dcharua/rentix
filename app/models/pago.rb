@@ -1,6 +1,8 @@
 class Pago < ActiveRecord::Base
   belongs_to :rentas
   belongs_to :user
+  belongs_to :categoria
+  validates :categoria_id, presence: true
 
 
   def self.search(param)

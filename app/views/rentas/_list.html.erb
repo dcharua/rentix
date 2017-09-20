@@ -29,10 +29,12 @@
                             <td><%= get_inquilinos(renta.inquilino_id).nombre%></td>
                             <td> <%= get_propiedads(renta.propiedad_id).to_label%></td>
                             <td><%= renta.costo%></td>
-                            <td> <%= renta.created_at%></td>
+                            <td> <%= renta.created_at.to_date%></td>
                             <td><%= renta.final%></td>
                             <td><%= renta.dia%></td>
-                            <td class="client-status">  <%= link_to "Editar", edit_renta_path(renta), class: "btn btn-xs btn-primary" %>
+                            <td class="client-status">
+                              <%= link_to "Ver", renta_path(renta), class: "btn btn-xs btn-info" %>
+                            <%= link_to "Editar", edit_renta_path(renta), class: "btn btn-xs btn-primary" %>
                               <%= link_to "Terminar", rentas_terminar_path(renta),
                                                                 data: { confirm: "¿Estas seguro que quieres terminar esta renta?"},
                                                                 class: "btn btn-xs btn-danger" %></td>
@@ -66,12 +68,14 @@
                             <td><%= get_inquilinos(renta.inquilino_id).nombre%></td>
                             <td> <%= get_propiedads(renta.propiedad_id).to_label%></td>
                             <td><%= renta.costo%></td>
-                            <td> <%= renta.created_at%></td>
+                            <td> <%= renta.created_at.to_date%></td>
                             <td><%= renta.final%></td>
                             <td><%= renta.dia%></td>
-                            <td class="client-status">  <%= link_to "Editar", edit_renta_path(renta), class: "btn btn-xs btn-primary" %>
-                              <%= link_to "Borrar", rentas_terminar_path(renta),
-                                                                data: { confirm: "¿Estas seguro que quieres terminar esta renta?"},
+                            <td class="client-status">
+                              <%= link_to "Ver", renta_path(renta), class: "btn btn-xs btn-info" %>
+                            <%= link_to "Renovar", edit_renta_path(renta), class: "btn btn-xs btn-primary" %>
+                              <%= link_to "Borrar", rentas_borrar_path(renta),
+                                                                data: { confirm: "Se eliminaran todos los registros de pago ¿Estas seguro que quieres borrar esta renta? "},
                                                                 class: "btn btn-xs btn-danger" %></td>
                         </tr>
                         <%end%>

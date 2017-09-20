@@ -25,17 +25,17 @@ $(document).ready(function() {
                       <div class="hr-line-dashed"></div>
 
                     <div class="form-group">
-                    <%= f.label :calle, 'Calle', class: "col-md-2 control-label", required: true %>
+                    <%= f.label :calle, 'Calle', class: "col-md-2 control-label" %>
                         <div class="col-md-4">
-                          <%= f.text_field :calle, class: "form-control", autofocus: true %>
+                          <%= f.text_field :calle, class: "form-control", autofocus: true, required: true %>
                         </div>
-                        <%= f.label :numero, 'Numero', class: "col-md-1 control-label",required: true %>
+                        <%= f.label :numero, 'Numero', class: "col-md-1 control-label" %>
                         <div class="col-md-2">
-                          <%= f.text_field :numero, class: "form-control", autofocus: true %>
+                          <%= f.number_field :numero, class: "form-control", min: 0, autofocus: true, required: true%>
                         </div>
                         <%= f.label :numero, 'Interior', class: "col-md-1 control-label" %>
                         <div class="col-md-2">
-                          <%= f.text_field :numeroe, class: "form-control", autofocus: true %>
+                          <%= f.number_field :numeroe, min: 0, class: "form-control", autofocus: true %>
                         </div>
                       </div>
 
@@ -45,27 +45,27 @@ $(document).ready(function() {
                           <div class="col-md-4">
                               <%= f.select :estado, ["Aguascalientes", "Baja California", "Campeche", "Baja California Sur", "Chiapas", "Chihuahua", "Ciudad de México", "Coahuila",
                                 "Durango", "Estado de México", "Guanajuato", "Guerrero", "Hidalgo", "Jalisco", "Michoacán", "Nayarit", "Nuevo León", "Oaxaca", "Puebla", "Querétaro",
-                                "Quintana Roo", "San Luis Potosí", "Sinaloa", "Sonora", "Tabasco", "Tamaulipas", "Tlaxcala", "Veracruz", "Yucatán", "Zacatecas", ], {}, class: "pais form-control" %>
+                                "Quintana Roo", "San Luis Potosí", "Sinaloa", "Sonora", "Tabasco", "Tamaulipas", "Tlaxcala", "Veracruz", "Yucatán", "Zacatecas", ], {}, class: "pais form-control", required: true %>
                           </div>
                           <%= f.label :municipio, 'Del/Municipio', class: "col-md-2 control-label" %>
                           <div class="col-md-4">
-                            <%= f.text_field :municipio, class: "form-control", autofocus: true %>
+                            <%= f.text_field :municipio, class: "form-control", autofocus: true, required: true %>
                           </div>
                         </div>
                           <div class="form-group">
                           <%= f.label :colonia, class: "col-md-2 control-label" %>
                           <div class="col-md-4">
-                            <%= f.text_field :colonia, class: "form-control", autofocus: true %>
+                            <%= f.text_field :colonia, class: "form-control", autofocus: true, required: true%>
                           </div>
                           <%= f.label :cp, 'Codigo Postal', class: "col-md-2 control-label" %>
                           <div class="col-md-4">
-                            <%= f.text_field :cp, class: "form-control", autofocus: true %>
+                            <%= f.number_field :cp, min: 0, class: "form-control", autofocus: true, required: true %>
                           </div>
                         </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group">
                         <div class="col-sm-12 text-center">
-                            <%= f.submit 'Enviar', class: 'btn btn-primary btn-lg center' %>
+                            <%= f.submit 'Guardar', class: 'btn btn-primary btn-lg center' %>
                         </div>
                     </div>
                   <% end %>

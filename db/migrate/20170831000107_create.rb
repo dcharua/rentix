@@ -39,13 +39,21 @@ class Create < ActiveRecord::Migration
 
     create_table :pagos do |t|
         t.belongs_to :rentas, index: true
+        t.belongs_to :categoria, index: true
         t.integer :monto
         t.date :fecha
         t.date :mes
+        t.string :comentarios
         t.boolean :pagado, default: false, null: false
         t.references :user, index: true, foreign_key: true
 
         t.timestamps null: false
       end
+
+      create_table :categoria do |t|
+          t.string :categoria
+          t.references :user, index: true, foreign_key: true
+          t.timestamps null: false
+        end
   end
 end

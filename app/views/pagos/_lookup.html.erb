@@ -11,9 +11,13 @@ $(document).ready(function() {
     <%= form_tag crear_pagos_path, remote: true, method: :get, id: 'pago-lookup-form' do %>
     <div class="form-group">
       <label class="col-md-1 ">Renta</label>
-      <div class="col-md-10">
+      <div class="col-md-5">
       <%= select_tag "rentas",  options_from_collection_for_select(rentas_activas.all, "id", "to_label"), class: 'sele form-control hidden', style:"width: 100%" %>
     </div>
+    <label class="col-md-1 ">Categoría</label>
+    <div class="col-md-5">
+    <%= select_tag "categoria",  options_from_collection_for_select(Categoria.all, "id", "to_label"), class: 'sele form-control hidden', style:"width: 100%" %>
+  </div>
     </div>
     <div class="form-group">
       <label class="col-md-1">Mes</label>

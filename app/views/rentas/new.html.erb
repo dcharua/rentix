@@ -14,50 +14,52 @@
                 <%= simple_form_for @renta, url: rentas_path, html: {id:"form", class: "wizard-big"} do |f| %>
                 <h1>Inquilino</h1>
                 <fieldset>
-                  <h4 class="rentas_inquilino">Seleciona un inquilino existente y haz click en "next"<h4/>
+
                   <div class="form-group col-sm-12" id="tohide">
+                    <%= link_to_add_association 'Introduce nuevos datos', f, :inquilino, class: "btn btn-outline btn-primary", id: "btnhide"%>
+                    <div class="hr-line-dashed"></div>
+
+                    <h4 class="rentas_inquilino">O seleciona un inquilino existente y haz click en "next"<h4/>
                     <%= f.association :inquilino, :collection =>current_user.inquilinos.order(:nombre).all,  input_html: {class: "pais form-control width100"}%>
-                    <h4 class = "rentas_inquilino"> o Introduce nuevos datos<h4/>
-                    <%= link_to_add_association 'Nuevos datos', f, :inquilino, class: "btn btn-outline btn-primary", id: "btnhide"%>
                   </div>
                   </fieldset>
 
                   <h1>Propiedad</h1>
                   <fieldset>
-                    <h4 class="rentas_propiedad">Seleciona una propiedad existente y haz click en "next"<h4/>
                     <div class="form-group col-sm-12" id= "tohide2">
-                      <%= f.association  :propiedad, :collection =>current_user.propiedads.order(:nombre).all,  input_html: {class: "pais2 form-control", style: "width: 100%"}%>
-                        <h4 class = "rentas_propiedad"> o Introduce nuevos datos<h4/>
-                      <%= link_to_add_association 'Nueva propiedad', f, :propiedad, class: "btn btn-primary", id: "btnhide2"%>
+                      <%= link_to_add_association 'Introduce una propiedad nueva', f, :propiedad, class: "btn btn-outline btn-primary", id: "btnhide2"%>
+                      <div class="hr-line-dashed"></div>
+
+                      <h4 class="rentas_propiedad">o Seleciona una propiedad existente y haz click en "next"<h4/>
+                        <%= f.association  :propiedad, :collection =>current_user.propiedads.order(:nombre).all,  input_html: {class: "pais2 form-control", style: "width: 100%"}%>
                     </div>
                   </fieldset>
 
                   <h1>Renta</h1>
                   <fieldset>
+                    <h4 >Agrega los datos de la renta<h4/>
                     <div class ="form-horizontal">
                       <div class="form-group">
-                          <%= f.label :final, class: "col-md-2 control-label" %>
+                          <%= f.label :final, "Fecha de terminación", class: "col-md-2 control-label" %>
                             <div class="col-md-4">
-                              <%= f.text_field :final, id: "datepicker", class:"datepicker form-control", required: true%>
+                              <%= f.text_field :final,  max: Date.today, id: "datepicker", class:"datepicker form-control", required: true%>
                             </div>
                         </div>
                       <div class="form-group">
-                        <%= f.label :costo, "Mensualidad", class: "col-md-2 control-label", required: true %>
+                        <%= f.label :costo, "Mensualidad", class: "col-md-2 control-label", required: true%>
                           <div class="col-md-4">
-                            <%= f.number_field :costo %>
+                            <%= f.number_field :costo, min: 0, class:"form-control"%>
                           </div>
-                          <%= f.label :dia, "Dia de pago", class: "col-md-2 control-label", required: true %>
+                          <%= f.label :dia, "* Dia de pago", class: "col-md-2 control-label", required: true%>
                             <div class="col-md-4">
-                              <%= f.number_field :dia %>
+                              <%= f.number_field :dia, in: 1..28, class:"form-control"%>
                           </div>
                         </div>
 
                       <div class="hr-line-dashed"></div>
-                      <div class="form-group">
-                          <div class="col-sm-12 text-center">
-                              <%= f.submit 'Crear', class: 'btn btn-primary btn-lg center' %>
-                          </div>
-                      </div>
+                      <div class="hr-line-dashed"></div>
+
+                      <span class = "bottom">* Dia del mes en la que el inquilino pagará la renta (1 - 28) </span>
                     </div>
                 </fieldset>
                 <% end %>
@@ -145,8 +147,8 @@ $(function() {
 $(".pais").select2();
 $(".pais2").select2();
 
-
 $('.datepicker').datepicker({format: 'yyyy-mm-dd'});
+
 
 
 $(function() {

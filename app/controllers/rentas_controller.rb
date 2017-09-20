@@ -31,7 +31,7 @@ class RentasController < ApplicationController
     if @renta.save
       time = Time.now
       loop do
-        pago = Pago.new({ :mes => time, :rentas_id => @renta.id, :pagado => false})
+        pago = Pago.new({ :mes => time, :rentas_id => @renta.id, :categoria_id => 1, :pagado => false})
         pago.user = current_user
         pago.save
         time = time + 1.month
@@ -53,7 +53,7 @@ class RentasController < ApplicationController
     if @renta.update(renta_params)
       loop do
         if @renta.pagos.where("strftime('%Y-%m', mes) = ?", time.strftime("%Y-%m")).blank?
-          pago = Pago.new({ :mes => time, :rentas_id => @renta.id, :pagado => false})
+          pago = Pago.new({ :mes => time, :rentas_id => @renta.id, :categoria_id => 1, :pagado => false})
           pago.user = current_user
           pago.save
         end

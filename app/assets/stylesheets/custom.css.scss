@@ -135,3 +135,8 @@ text-align: center;
 .white::-ms-input-placeholder { /* Microsoft Edge */
      color: white !important;
 }
+
+.bottom {
+      position: relative;
+    bottom: 0;
+}

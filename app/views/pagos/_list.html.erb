@@ -23,7 +23,7 @@
                             <td> <%= get_propiedads(pago.rentas.propiedad_id).nombre%></td>
                             <td><%= pago.monto%></td>
                             <td> <%= pago.fecha%></td>
-                            <td><%= pago.mes%></td>
+                            <td><%= pago.mes.strftime("%m")%></td>
                             <td class="client-status">  <%= link_to "Editar", edit_pago_path(pago), class: "btn btn-xs btn-primary" %>
                               <%= link_to "Borrar", pago_path(pago), method: :delete,
                                                                 data: { confirm: "¿Estas seguro que quieres borrar a este pago?"},

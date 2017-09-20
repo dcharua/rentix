@@ -13,6 +13,15 @@
 
 ActiveRecord::Schema.define(version: 20170831000107) do
 
+  create_table "categoria", force: :cascade do |t|
+    t.string   "categoria"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "categoria", ["user_id"], name: "index_categoria_on_user_id"
+
   create_table "inquilinos", force: :cascade do |t|
     t.string   "nombre"
     t.date     "nacimiento"
@@ -28,15 +37,18 @@ ActiveRecord::Schema.define(version: 20170831000107) do
 
   create_table "pagos", force: :cascade do |t|
     t.integer  "rentas_id"
+    t.integer  "categoria_id"
     t.integer  "monto"
     t.date     "fecha"
     t.date     "mes"
-    t.boolean  "pagado"
+    t.string   "comentarios"
+    t.boolean  "pagado",       default: false, null: false
     t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
+  add_index "pagos", ["categoria_id"], name: "index_pagos_on_categoria_id"
   add_index "pagos", ["rentas_id"], name: "index_pagos_on_rentas_id"
   add_index "pagos", ["user_id"], name: "index_pagos_on_user_id"
 

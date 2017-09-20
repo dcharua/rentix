@@ -16,13 +16,18 @@ $(document).ready(function() {
             </div>
             <div class="ibox-content">
               <%= simple_form_for @pago, html: {id:"form", class: "wizard-big form-horizontal", required: true} do |f| %>
-                    <div class="form-group col-md-12">
+                    <div class="form-group">
+                      <div class="col-md-6">
                       <%= f.association :rentas , :collection => rentas_activas.order(:inquilino_id),  input_html: {class: "pa form-control"}%>
                     </div>
+                    <div class="col-md-6">
+                      <%= f.association :categoria , :collection => Categoria.where.not(id: 1).order(:id),  input_html: {class: "pa form-control"}%>
+                    </div>
+                  </div>
                     <div class="form-group">
-                    <%= f.label :monto, 'Monto', class: "col-md-2 control-label", required: true %>
+                    <%= f.label :monto, 'Monto', class: "col-md-1 control-label", required: true %>
                         <div class="col-md-4">
-                          <%= f.number_field :monto %>
+                          <%= f.number_field :monto, class: "form-control"%>
                         </div>
                         <%= f.label :fecha, "Fecha del pago", class: "col-md-2 control-label",  required: true %>
                           <div class="col-md-4">
@@ -30,7 +35,6 @@ $(document).ready(function() {
                           </div>
                     </div>
                     <div class="form-group ">
-                      <%= f.label :mes, 'Correspondiente al', class: "col-md-2 control-label ", required: true %>
                           <div class="col-md-2">
                             <%= f.input :mes , as: :date, discard_day: true, input_html: {class: "pa form-control", label: "a"}%>
                           </div>

@@ -1,1 +1,156 @@
-<h1>show</h1>
+<%@inquilino = get_inquilinos(@renta.inquilino_id)
+  @propiedad = get_propiedads(@renta.propiedad_id)
+%>
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2><%= @renta.to_label%></h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="<%= url_for :controller => 'home', :action => 'index' %>">Inicio</a>
+        </li>
+
+        <li class="active">
+              <a href="<%= url_for :controller => 'rentas', :action => 'index' %>">Rentas</a>
+        </li>
+    </ol>
+</div>
+<div class="col-lg-2">
+
+</div>
+</div>
+<div class="wrapper wrapper-content animated fadeInRight">
+
+<div class="row m-b-lg m-t-lg">
+                <div class="col-md-6">
+                    <div class="profile-info">
+                        <div class="">
+                            <div>
+                                <h2 class="no-margins">
+                                    <%=@propiedad.nombre%>
+                                </h2>
+                                <h3><%=@inquilino.nombre%></h3>
+                                <small>
+                                    Antiguedad <%= distance_of_time_in_words(@renta.created_at.to_date, Time.now) %>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <table class="table small m-b-xs">
+                        <tbody>
+                        <tr>
+                            <td>
+                                <strong>Vigencia: </strong> <%=@renta.final%>
+                            </td>
+                            <td>
+                                <strong>Restan: </strong> <%= distance_of_time_in_words(@renta.final, Time.now) %>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Renta menusal: </strong> <%= @renta.costo%>
+                            </td>
+                            <td>
+                                <strong>Renta anual:</strong> <%= @renta.costo * 12%>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>154</strong> Tags
+                            </td>
+                            <td>
+                                <strong>32</strong> Friends
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+        <div class="row">
+          <div class="col-md-6">
+              <div class="ibox float-e-margins">
+                  <div class="ibox-title">
+                      <h5>Puntualidad de <%=@inquilino.nombre%></h5>
+                  </div>
+                  <div class="ibox-content">
+                      <div>
+                          <canvas id="barChart" height="140"></canvas>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <div class="col-md-6">
+              <div class="ibox float-e-margins">
+                  <div class="ibox-title">
+                      <h5>Adeudo mensual</h5>
+                  </div>
+                  <div class="ibox-content">
+                      <div>
+                          <canvas id="barChart2" height="140"></canvas>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+        </div>
+    </div>
+
+<% content_for :javascript do %>
+
+<script type="text/javascript">
+
+
+$(function() {
+  var barData = {
+    labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre','Diciembre'],
+      datasets: [
+
+          {
+              label: "Dias de retraso al pagar",
+              backgroundColor: 'rgba(26,179,148,0.5)',
+              borderColor: "rgba(26,179,148,0.7)",
+              pointBackgroundColor: "rgba(26,179,148,1)",
+              pointBorderColor: "#fff",
+              data: [<%=getRetraso(@renta, "01")%>, <%=getRetraso(@renta, "02")%>, <%=getRetraso(@renta, "03")%>, <%=getRetraso(@renta, "04")%>,
+              <%=getRetraso(@renta, "05")%>, <%=getRetraso(@renta, "06")%>, <%=getRetraso(@renta, "07")%>,  <%=getRetraso(@renta, "08")%>,  <%=getRetraso(@renta, "09")%>, <%=getRetraso(@renta, "10")%> , <%=getRetraso(@renta, "11")%> , <%=getRetraso(@renta, "12")%>]
+            }
+      ]
+  };
+
+  var barOptions = {
+      responsive: true
+  };
+
+  var ctx2 = document.getElementById("barChart").getContext("2d");
+  new Chart(ctx2, {type: 'bar', data: barData, options:barOptions});
+
+  var barData2 = {
+    labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre','Diciembre'],
+      datasets: [
+
+          {
+              label: "Cantidad adeudada",
+              backgroundColor: "rgba(54, 124, 237, 0.5)",
+              borderColor: "rgba(54, 124, 237, 1)",
+              pointBackgroundColor: "rgba(54, 124, 237, 1)",
+              pointBorderColor: "#fff",
+              data: [<%=getBalanceMes(@renta, 1)%>, <%=getBalanceMes(@renta, 2)%>, <%=getBalanceMes(@renta, 3)%>, <%=getBalanceMes(@renta, 4)%>,
+                <%=getBalanceMes(@renta, 5)%>, <%=getBalanceMes(@renta, 6)%>, <%=getBalanceMes(@renta, 7)%>,  <%=getBalanceMes(@renta, 8)%>,  <%=getBalanceMes(@renta, 9)%>, <%=getBalanceMes(@renta, 10)%> , <%=getBalanceMes(@renta, 11)%> , <%=getBalanceMes(@renta, 12)%>]
+            }
+      ]
+  };
+
+
+
+  var ctx2 = document.getElementById("barChart2").getContext("2d");
+  new Chart(ctx2, {type: 'bar', data: barData2, options:barOptions});
+});
+
+</script>
+
+<% end %>

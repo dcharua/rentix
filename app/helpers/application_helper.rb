@@ -73,7 +73,66 @@ module ApplicationHelper
 
     end
 
+    def getBalanceMes(renta, mes)
+      inicio = renta["created_at"].to_date
+      final = Time.now
+      final = final.change(month: mes)
+      inicio = inicio.change(day: renta["dia"])
+      if final > inicio && final < Time.now
+        meses = (final.year * 12 + final.month) - (inicio.year * 12 + inicio.month)
+        if inicio.day < final.day
+          meses = meses +1
+        end
+        return (meses * renta["costo"]) - getTotalPagado(renta) 
+      else
+        return 0
+      end
+    end
+
     def getTotalPagado(renta)
      Rentas.joins(:pagos).where("rentas.id ==?",   renta.id ).sum(:monto)
     end
+
+    def getRetraso(renta, mes)
+      dia = Time.now
+      dia = dia.change(day: renta.dia)
+      dia = dia.change(month: mes.to_i)
+      rent = renta.pagos.select("pagos.fecha").where("strftime('%m', pagos.mes) == ? AND pagado == ?", mes, true)
+      if rent.blank?
+        return 0
+      else
+        return (rent[0].fecha.to_date - dia.to_date).to_i
+      end
+    end
+
+
+    def distance_of_time_in_words(from_time, to_time = 0, include_seconds = false)
+     from_time = from_time.to_time if from_time.respond_to?(:to_time)
+     to_time = to_time.to_time if to_time.respond_to?(:to_time)
+     distance_in_minutes = (((to_time - from_time).abs)/60).round
+     distance_in_seconds = ((to_time - from_time).abs).round
+
+     case distance_in_minutes
+       when 0..1
+         return (distance_in_minutes == 0) ? 'menos de um minuto' : '1 minuto' unless include_seconds
+         case distance_in_seconds
+           when 0..4   then 'menos de 5 segundos'
+           when 5..9   then 'menos de 10 segundos'
+           when 10..19 then 'menos de 20 segundos'
+           when 20..59 then 'menos de um minuto'
+         else             '1 minuto'
+         end
+
+        when 2..44           then "#{distance_in_minutes} minutos"
+        when 45..89          then 'aproximadamente 1 hora'
+        when 90..1439        then "aproximadamente #{(distance_in_minutes.to_f / 60.0).round} horas"
+        when 1440..2879      then '1 dia'
+        when 2880..43199     then "#{(distance_in_minutes / 1440).round} dias"
+        when 43200..86399    then 'aproximadamente 1 mes'
+        when 86400..525959   then "#{(distance_in_minutes / 43200).round} meses"
+        when 525960..1051919 then 'aproximadamente 1 año'
+     else                      "mas de #{(distance_in_minutes / 525960).round} años"
+
+   end
+end
 end

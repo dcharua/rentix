@@ -29,14 +29,24 @@ class PagosController < ApplicationController
   end
 
   def crear
-    @pago = Pago.where(["rentas_id == ? AND cast(strftime('%Y', mes) as int) = ? AND cast(strftime('%m', mes) as int) = ?", params[:rentas], params[:mes]["fecha(1i)"].to_i, params[:mes]["fecha(2i)"].to_i]).first
-    if @pago
-      render partial: "form"
-    else
-      render status: :not_found, nothing: true
-   end
+    if params[:categoria] != "1"
+      fecha = Time.now
+      fecha = fecha.change(month: params[:mes]["fecha(2i)"].to_i)
+      fecha = fecha.change(year: params[:mes]["fecha(1i)"].to_i)
 
-  end
+      @pago = Pago.new({ :rentas_id => params[:rentas], :mes => fecha, :categoria_id => params[:categoria], :pagado => true})
+      render partial: 'form'
+    end
+    if params[:categoria] == "1"
+      @pago = Pago.where(["rentas_id == ? AND cast(strftime('%Y', mes) as int) = ? AND cast(strftime('%m', mes) as int) = ?", params[:rentas],
+       params[:mes]["fecha(1i)"].to_i, params[:mes]["fecha(2i)"].to_i]).first
+      if @pago
+        render partial: "form"
+      else
+        render status: :not_found, nothing: true
+     end
+   end
+ end
 
   def update
     if @pago.update(pago_params)
@@ -72,7 +82,7 @@ class PagosController < ApplicationController
 
   private
   def set_pago
-    @pago= Pago.find(params[:id])
+    @pago = Pago.find(params[:id])
   end
 
   def require_same_user
@@ -82,8 +92,12 @@ class PagosController < ApplicationController
     end
   end
 
+  def otro_params
+    params.permit(:mes, :rentas_id, :categoria_id)
+  end
+
   def pago_params
-    params.require(:pago).permit(:monto, :fecha, :mes, :rentas_id, :pagado)
+    params.require(:pago).permit(:monto, :fecha, :mes, :rentas_id, :pagado, :categoria_id, :comentarios)
   end
 
 end

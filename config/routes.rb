@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get "search_all", to: "home#search"
   get 'pagos/nuevo', to: "pagos#nuevo"
   get 'rentas/:id/terminar', to: "rentas#terminar", as: "rentas_terminar"
+  get 'rentas/:id/borrar', to: "rentas#destroy", as: "rentas_borrar"
 
 
   resources :inquilinos
