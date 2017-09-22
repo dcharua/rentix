@@ -1,6 +1,7 @@
 class Propiedad < ActiveRecord::Base
   has_many :rentas
   has_many :inquilinos, through: :rentas
+  has_many :gastos
   belongs_to :user
   validates :user_id, presence: true
 

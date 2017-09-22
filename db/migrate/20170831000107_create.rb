@@ -56,7 +56,7 @@ class Create < ActiveRecord::Migration
           t.date :fecha
           t.string :comentarios
           t.references :user, index: true, foreign_key: true
-          t.references :rentas, index: true, foreign_key: true
+          t.references :propiedads, index: true, foreign_key: true
           t.timestamps null: false
         end
 

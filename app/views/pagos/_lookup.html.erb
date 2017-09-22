@@ -16,7 +16,7 @@ $(document).ready(function() {
     </div>
     <label class="col-md-1 ">Categoría</label>
     <div class="col-md-5">
-    <%= select_tag "categoria",  options_from_collection_for_select(Categoria.all, "id", "to_label"), class: 'sele form-control hidden', style:"width: 100%" %>
+    <%= select_tag "categoria",  options_from_collection_for_select(Categoria.where("id < ?", 5), "id", "to_label"), class: 'sele form-control hidden', style:"width: 100%" %>
   </div>
     </div>
     <div class="form-group">

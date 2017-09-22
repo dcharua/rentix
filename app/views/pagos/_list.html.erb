@@ -1,7 +1,10 @@
 <div class="clients-list">
     <ul class="nav nav-tabs">
         <span class="pull-right small text-muted">Tienes <%=@pagos.count%> Pagos</span>
-        <li class="active"><a data-toggle="tab" href="#tab-1"><i class="fa fa-money"></i> Pagos</a></li>
+        <li class="active"><a data-toggle="tab" href="#tab-1">Rentas</a></li>
+        <li class = ""><a data-toggle="tab" href="#tab-2"> Mantenimiento</a></li>
+        <li class = ""><a data-toggle="tab" href="#tab-3"> Garantía</a></li>
+        <li class = ""><a data-toggle="tab" href="#tab-4"> Otros</a></li>
     </ul>
     <div class="tab-content">
         <div id="tab-1" class="tab-pane active">
@@ -9,32 +12,155 @@
                 <div class="table-responsive">
                     <table class="table table-striped table-hover">
                         <tbody>
+                          <%  if @pagosR  %>
+                        <%  if @pagosR.size > 0  %>
                           <tr>
                               <td><strong>Inquilino</strong></td>
                               <td><strong>Propiedad</strong></td>
                               <td><strong>Monto</strong></td>
                               <td><strong>Fecha</strong></td>
                               <td><strong>Mes</strong></td>
+                              <td><strong>Comentarios</strong></td>
                               <td><strong>Acciones</strong></td>
                           </tr>
-                          <% @pagos.each do |pago| %>
+                          <% @pagosR.each do |pagoR| %>
                         <tr>
-                            <td><%= get_inquilinos(pago.rentas.inquilino_id).nombre%></td>
-                            <td> <%= get_propiedads(pago.rentas.propiedad_id).nombre%></td>
-                            <td><%= pago.monto%></td>
-                            <td> <%= pago.fecha%></td>
-                            <td><%= pago.mes.strftime("%m")%></td>
-                            <td class="client-status">  <%= link_to "Editar", edit_pago_path(pago), class: "btn btn-xs btn-primary" %>
-                              <%= link_to "Borrar", pago_path(pago), method: :delete,
+                            <td><%= get_inquilinos(pagoR.rentas.inquilino_id).nombre%></td>
+                            <td> <%= get_propiedads(pagoR.rentas.propiedad_id).nombre%></td>
+                            <td><%= pagoR.monto%></td>
+                            <td> <%= pagoR.fecha%></td>
+                            <td><%= pagoR.mes.strftime("%m")%></td>
+                            <td> <%= pagoR.comentarios%></td>
+                            <td class="client-status">  <%= link_to "Editar", edit_pago_path(pagoR), class: "btn btn-xs btn-primary" %>
+                              <%= link_to "Borrar", pago_path(pagoR), method: :delete,
                                                                 data: { confirm: "¿Estas seguro que quieres borrar a este pago?"},
                                                                 class: "btn btn-xs btn-danger" %></td>
                         </tr>
+                        <%end %>
                         <%end%>
+                        <%end %>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
+        <div id="tab-2" class="tab-pane">
+            <div class="full-height-scroll">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <tbody>
+
+                          <% if @pagosM %>
+                          <%  if @pagosM.size > 0  %>
+                            <tr>
+                                <td><strong>Inquilino</strong></td>
+                                <td><strong>Propiedad</strong></td>
+                                <td><strong>Monto</strong></td>
+                                <td><strong>Fecha</strong></td>
+                                <td><strong>Mes</strong></td>
+                                <td><strong>Comentarios</strong></td>
+                                <td><strong>Acciones</strong></td>
+                            </tr>
+                            <% @pagosM.each do |pagoM| %>
+                          <tr>
+                              <td><%= get_inquilinos(pagoM.rentas.inquilino_id).nombre%></td>
+                              <td> <%= get_propiedads(pagoM.rentas.propiedad_id).nombre%></td>
+                              <td><%= pagoM.monto%></td>
+                              <td> <%= pagoM.fecha%></td>
+                              <td><%= pagoM.mes.strftime("%m")%></td>
+                              <td> <%= pagoM.comentarios%></td>
+                              <td class="client-status">  <%= link_to "Editar", edit_pago_path(pagoM), class: "btn btn-xs btn-primary" %>
+                                <%= link_to "Borrar", pago_path(pagoM), method: :delete,
+                                                                  data: { confirm: "¿Estas seguro que quieres borrar a este pago?"},
+                                                                  class: "btn btn-xs btn-danger" %></td>
+                          </tr>
+                          <%end %>
+                          <%end%>
+                          <%end %>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+          </div>
+
+          <div id="tab-3" class="tab-pane">
+              <div class="full-height-scroll">
+                  <div class="table-responsive">
+                      <table class="table table-striped table-hover">
+                          <tbody>
+
+                            <% if @pagosG %>
+                            <%  if @pagosG.size > 0  %>
+                              <tr>
+                                  <td><strong>Inquilino</strong></td>
+                                  <td><strong>Propiedad</strong></td>
+                                  <td><strong>Monto</strong></td>
+                                  <td><strong>Fecha</strong></td>
+                                  <td><strong>Mes</strong></td>
+                                  <td><strong>Comentarios</strong></td>
+                                  <td><strong>Acciones</strong></td>
+                              </tr>
+                              <% @pagosG.each do |pagoG| %>
+                            <tr>
+                                <td><%= get_inquilinos(pagoG.rentas.inquilino_id).nombre%></td>
+                                <td> <%= get_propiedads(pagoG.rentas.propiedad_id).nombre%></td>
+                                <td><%= pagoG.monto%></td>
+                                <td> <%= pagoG.fecha%></td>
+                                <td><%= pagoG.mes.strftime("%m")%></td>
+                                <td> <%= pagoG.comentarios%></td>
+                                <td class="client-status">  <%= link_to "Editar", edit_pago_path(pagoG), class: "btn btn-xs btn-primary" %>
+                                  <%= link_to "Borrar", pago_path(pagoG), method: :delete,
+                                                                    data: { confirm: "¿Estas seguro que quieres borrar a este pago?"},
+                                                                    class: "btn btn-xs btn-danger" %></td>
+                            </tr>
+                            <%end %>
+                            <%end%>
+                            <%end %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-4" class="tab-pane">
+                <div class="full-height-scroll">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <tbody>
+
+                              <% if @pagosO %>
+                              <%  if @pagosO.size > 0  %>
+                                <tr>
+                                    <td><strong>Inquilino</strong></td>
+                                    <td><strong>Propiedad</strong></td>
+                                    <td><strong>Monto</strong></td>
+                                    <td><strong>Fecha</strong></td>
+                                    <td><strong>Mes</strong></td>
+                                    <td><strong>Comentarios</strong></td>
+                                    <td><strong>Acciones</strong></td>
+                                </tr>
+                                <% @pagosO.each do |pagoO| %>
+                              <tr>
+                                  <td><%= get_inquilinos(pagoO.rentas.inquilino_id).nombre%></td>
+                                  <td> <%= get_propiedads(pagoO.rentas.propiedad_id).nombre%></td>
+                                  <td><%= pagoO.monto%></td>
+                                  <td> <%= pagoO.fecha%></td>
+                                  <td><%= pagoO.mes.strftime("%m")%></td>
+                                  <td> <%= pagoO.comentarios%></td>
+                                  <td class="client-status">  <%= link_to "Editar", edit_pago_path(pagoO), class: "btn btn-xs btn-primary" %>
+                                    <%= link_to "Borrar", pago_path(pagoO), method: :delete,
+                                                                      data: { confirm: "¿Estas seguro que quieres borrar a este pago?"},
+                                                                      class: "btn btn-xs btn-danger" %></td>
+                              </tr>
+                              <%end %>
+                              <%end%>
+                              <%end %>
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+
     </div>
 
 </div>

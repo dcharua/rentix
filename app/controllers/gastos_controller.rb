@@ -5,6 +5,13 @@ class GastosController < ApplicationController
   protect_from_forgery except: :search
 
   def index
+    @gastosM = current_user.gastos.where(" categoria_id = ?", 3)
+    @gastosO = current_user.gastos.where(" categoria_id = ?", 4)
+    @gastosA = current_user.gastos.where(" categoria_id = ?", 5)
+    @gastosR = current_user.gastos.where(" categoria_id = ?", 6)
+    @gastosS = current_user.gastos.where(" categoria_id = ?", 7)
+    @gastosL = current_user.gastos.where(" categoria_id = ?", 8)
+    @gastosI = current_user.gastos.where(" categoria_id = ?", 9)
     @gastos = current_user.gastos.all
     @actualizado = current_user.gastos.maximum('updated_at')
   end
@@ -70,7 +77,7 @@ class GastosController < ApplicationController
 
 
   def gasto_params
-    params.require(:gasto).permit(:monto, :fecha, :rentas_id, :categoria_id, :comentarios)
+    params.require(:gasto).permit(:monto, :fecha, :propiedads_id, :categoria_id, :comentarios)
   end
 
 end

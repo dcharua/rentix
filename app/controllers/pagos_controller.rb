@@ -5,8 +5,13 @@ class PagosController < ApplicationController
   protect_from_forgery except: :search
 
   def index
+    @pagosR = current_user.pagos.where("pagos.pagado = ? AND categoria_id = ?", true, 1)
+    @pagosM = current_user.pagos.where("pagos.pagado = ? AND categoria_id = ?", true, 3)
+    @pagosG = current_user.pagos.where("pagos.pagado = ? AND categoria_id = ?", true, 2)
+    @pagosO = current_user.pagos.where("pagos.pagado = ? AND categoria_id = ?", true, 4)
     @pagos = current_user.pagos.where("pagos.pagado = ?", true)
     @actualizado = current_user.pagos.maximum('updated_at')
+
   end
 
   def new
