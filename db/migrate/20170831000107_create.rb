@@ -50,6 +50,16 @@ class Create < ActiveRecord::Migration
         t.timestamps null: false
       end
 
+      create_table :gastos do |t|
+          t.belongs_to :categoria, index: true
+          t.integer :monto
+          t.date :fecha
+          t.string :comentarios
+          t.references :user, index: true, foreign_key: true
+          t.references :rentas, index: true, foreign_key: true
+          t.timestamps null: false
+        end
+
       create_table :categoria do |t|
           t.string :categoria
           t.references :user, index: true, foreign_key: true

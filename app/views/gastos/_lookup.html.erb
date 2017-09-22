@@ -1,0 +1,41 @@
+
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+  $(".sele").select2();
+});
+</script>
+<div id="pago-lookup">
+  <div class="input-group form-horizontal">
+    <%= form_tag crear_pagos_path, remote: true, method: :get, id: 'pago-lookup-form' do %>
+    <div class="form-group">
+      <label class="col-md-1 ">Renta</label>
+      <div class="col-md-5">
+      <%= select_tag "rentas",  options_from_collection_for_select(rentas_activas.all, "id", "to_label"), class: 'sele form-control hidden', style:"width: 100%" %>
+    </div>
+    <label class="col-md-1 ">Categoría</label>
+    <div class="col-md-5">
+    <%= select_tag "categoria",  options_from_collection_for_select(Categoria.all, "id", "to_label"), class: 'sele form-control hidden', style:"width: 100%" %>
+  </div>
+    </div>
+    <div class="form-group">
+      <label class="col-md-1">Mes</label>
+      <div class="col-md-10">
+      <%= date_select("mes", "fecha", {discard_day: true, start_year: Time.now.year, end_year: Date.today.year + 1, date_separator: " ", :use_month_names => ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre','Diciembre']}, {:class => "sele input form-control hidden"})%>
+    </div>
+  </div>
+        <span class="input-group-btn">
+          <%= button_tag(type: :submit, class: "btn btn-outline btn-primary") do %>
+            Siguiente <i class="fa fa-arrow-right"></i>
+          <% end %>
+      </span>
+    <% end %>
+  </div>
+  <%= render 'shared/spinner' %>
+  <% if @pago %>
+    <%= render 'form' %>
+
+  <%end%>
+  <div id="pago-lookup-errors"></div>
+</div>

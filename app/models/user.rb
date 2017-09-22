@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
   has_many :inquilinos
   has_many :propiedads
   has_many :pagos
+  has_many :gastos
   has_many :rentas, class_name: "::Rentas", foreign_key: "user_id"
 
 

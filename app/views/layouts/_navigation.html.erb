@@ -68,5 +68,13 @@
             </ul>
         </li>
 
+        <li class="<%= is_active_controller('Pago') %>">
+            <a href=""><i class="fa fa-usd"></i> <span class="nav-label" data-i18n="nav.gasto">Gastos</span> <span class="fa arrow"></span></a>
+            <ul class="nav nav-second-level collapse <%= is_active_controller('gastos', 'in') %>">
+                <li class="<%= is_active_action('index') %>"><%= link_to "Ver", gastos_path %></li>
+                <li class="<%= is_active_action('nuevo') %>"><%= link_to "Agregar", new_gasto_path %></li>
+            </ul>
+        </li>
+
     </div>
 </nav>

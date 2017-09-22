@@ -22,6 +22,21 @@ ActiveRecord::Schema.define(version: 20170831000107) do
 
   add_index "categoria", ["user_id"], name: "index_categoria_on_user_id"
 
+  create_table "gastos", force: :cascade do |t|
+    t.integer  "categoria_id"
+    t.integer  "monto"
+    t.date     "fecha"
+    t.string   "comentarios"
+    t.integer  "user_id"
+    t.integer  "rentas_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "gastos", ["categoria_id"], name: "index_gastos_on_categoria_id"
+  add_index "gastos", ["rentas_id"], name: "index_gastos_on_rentas_id"
+  add_index "gastos", ["user_id"], name: "index_gastos_on_user_id"
+
   create_table "inquilinos", force: :cascade do |t|
     t.string   "nombre"
     t.date     "nacimiento"
