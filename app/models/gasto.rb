@@ -1,5 +1,5 @@
 class Gasto < ActiveRecord::Base
-  belongs_to :propiedads
+  belongs_to :propiedad
   belongs_to :user
   belongs_to :categoria
   validates :categoria_id, presence: true
@@ -10,21 +10,17 @@ class Gasto < ActiveRecord::Base
     "#{categoria}"
   end
 
-  def self.search(param)
-    return Gasto.none if param.blank?
-    renta_matches(param)
-  end
-
-
  def self.search(param)
    return Gasto.none if param.blank?
-   (renta_matches(param)).uniq
+   propiedad_matches(param)
  end
 
- def self.renta_matches(param)
-   renta = Rentas.search(param)
-   gasto = Gasto.joins(:rentas).where(rentas: renta)
-   gasto.where(pagado: true)
+ def self.propiedad_matches(param)
+   propiedad = Propiedad.search(param)
+   if propiedad[0]
+     gasto = Gasto.where("propiedad_id = ?", propiedad[0].id)
+   else gasto = Gasto.none
+  end
  end
 
 end

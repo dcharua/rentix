@@ -37,6 +37,11 @@
                 <%= link_to "/" do %>
                 <i class="fa fa-laptop"></i> <span class="nav-label">Inicio</span>
                 <% end %>
+              </li>
+              <li class="<%= is_active_controller('Renta') %>">
+                <%= link_to new_renta_path do%>
+                <i class="fa fa-plus-square-o "></i> <span class="nav-label">Nuevo</span>
+                  <% end %>
             </li>
             <li class="<%= is_active_controller('Inquilino') %>">
                 <a href=""><i class="fa fa-users"></i> <span class="nav-label" data-i18n="nav.inquilinos">Inquilinos</span> <span class="fa arrow"></span></a>

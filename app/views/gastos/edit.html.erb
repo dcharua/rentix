@@ -18,7 +18,7 @@ $(document).ready(function() {
               <%= simple_form_for @gasto, html: {id:"form", class: "wizard-big form-horizontal", required: true} do |f| %>
                     <div class="form-group">
                       <div class="col-md-6">
-                      <%= f.association :propiedads , :collection => current_user.propiedads.order(:nombre), :include_blank => "Ninguna", input_html: {class: "pa form-control"}%>
+                      <%= f.association :propiedad , :collection => current_user.propiedads.order(:nombre), :include_blank => "Ninguna", input_html: {class: "pa form-control"}%>
                     </div>
                     <div class="col-md-6">
                       <%= f.association :categoria , :collection => Categoria.where("id > ?", 2).order(:categoria),  input_html: {class: "pa form-control"}%>

@@ -80,7 +80,11 @@ class PagosController < ApplicationController
   end
 
   def destroy
-    @pago.update({:fecha => nil, :monto => nil, :pagado => false} )
+    if @pago.categoria_id == 1
+      @pago.update({:fecha => nil, :monto => nil, :pagado => false} )
+    else
+      @pago.destroy
+    end
     flash[:danger] = "El pago fue eliminado"
     redirect_to root_path
   end
@@ -95,10 +99,6 @@ class PagosController < ApplicationController
       flash[:danger] = "Solo puedes modificar tus pagos"
       redirect_to root_path
     end
-  end
-
-  def otro_params
-    params.permit(:mes, :rentas_id, :categoria_id)
   end
 
   def pago_params

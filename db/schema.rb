@@ -28,13 +28,13 @@ ActiveRecord::Schema.define(version: 20170831000107) do
     t.date     "fecha"
     t.string   "comentarios"
     t.integer  "user_id"
-    t.integer  "propiedads_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.integer  "propiedad_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   add_index "gastos", ["categoria_id"], name: "index_gastos_on_categoria_id"
-  add_index "gastos", ["propiedads_id"], name: "index_gastos_on_propiedads_id"
+  add_index "gastos", ["propiedad_id"], name: "index_gastos_on_propiedad_id"
   add_index "gastos", ["user_id"], name: "index_gastos_on_user_id"
 
   create_table "inquilinos", force: :cascade do |t|

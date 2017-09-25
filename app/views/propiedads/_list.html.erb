@@ -24,7 +24,9 @@
                             <td><%= propiedad.estado%></td>
                             <td> <%= propiedad.cp%></td>
                             <td><%= propiedad.municipio%></td>
-                            <td class="client-status">  <%= link_to "Editar", edit_propiedad_path(propiedad), class: "btn btn-xs btn-primary" %>
+                            <td class="client-status">
+                              <%= link_to "Ver", propiedad_path(propiedad), class: "btn btn-xs btn-info" %>
+                              <%= link_to "Editar", edit_propiedad_path(propiedad), class: "btn btn-xs btn-primary" %>
                               <%= link_to "Borrar", propiedad_path(propiedad), method: :delete,
                                                                 data: { confirm: "¿Estas seguro que quieres borrar a este propiedad?"},
                                                                 class: "btn btn-xs btn-danger" %></td>

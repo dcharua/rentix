@@ -1,6 +1,6 @@
 class Inquilino < ActiveRecord::Base
-  has_many :rentas
-  has_many :propiedads, through: :rentas
+  has_many :rentas,  class_name: "::Rentas", foreign_key: "inquilino_id"
+  has_many :propiedads, through: :rentas, class_name: "::Rentas", foreign_key: "inquilino_id"
   belongs_to :user
   validates :user_id, presence: true
 

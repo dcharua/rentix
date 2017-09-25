@@ -77,7 +77,7 @@ class GastosController < ApplicationController
 
 
   def gasto_params
-    params.require(:gasto).permit(:monto, :fecha, :propiedads_id, :categoria_id, :comentarios)
+    params.require(:gasto).permit(:monto, :fecha, :propiedad_id, :categoria_id, :comentarios)
   end
 
 end

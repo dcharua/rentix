@@ -31,6 +31,19 @@ module ApplicationHelper
       rentas_activas.joins(:pagos).select("pagos.id as pid, inquilino_id, propiedad_id, dia, costo, monto, mes, rentas.created_at, rentas.id ").where(["strftime('%m', pagos.mes) >= ? AND pagado == ? AND pagos.categoria_id == ?", Time.now.strftime("%m"), true, 1])
     end
 
+
+    def pagos_mantenimiento
+      rentas_activas.joins(:pagos).select("pagos.id as pid, inquilino_id, propiedad_id, pagos.fecha, monto, comentarios,  rentas.id ").where(["strftime('%m', pagos.mes) >= ? AND pagado == ? AND pagos.categoria_id == ?", Time.now.strftime("%m"), true, 3])
+    end
+
+    def pagos_garantia
+      rentas_activas.joins(:pagos).select("pagos.id as pid, inquilino_id, propiedad_id, pagos.fecha, monto, comentarios,  rentas.id ").where(["strftime('%m', pagos.mes) >= ? AND pagado == ? AND pagos.categoria_id == ?", Time.now.strftime("%m"), true, 2])
+    end
+
+    def pagos_otro
+      rentas_activas.joins(:pagos).select("pagos.id as pid, inquilino_id, propiedad_id, pagos.fecha, monto, comentarios,  rentas.id ").where(["strftime('%m', pagos.mes) >= ? AND pagado == ? AND pagos.categoria_id == ?", Time.now.strftime("%m"), true, 4])
+    end
+
     def pagos_atrasados
       rentas_activas.joins(:pagos).select("pagos.id as pid, inquilino_id, propiedad_id, dia, costo, mes, rentas.created_at, rentas.id").where(["strftime('%m', pagos.mes) == ? AND pagado == ?", Time.now.strftime("%m"), false])
     end
@@ -61,9 +74,11 @@ module ApplicationHelper
       if inicio.day < final.day
         meses = meses +1
       end
-      return getTotalPagado(renta) - meses * renta["costo"]
-
+      return  meses * renta["costo"] - getTotalPagado(renta)
     end
+
+
+
 
     def getBalanceMes(renta, mes)
       inicio = renta["created_at"].to_date
@@ -82,7 +97,7 @@ module ApplicationHelper
     end
 
     def getTotalPagado(renta)
-     Rentas.joins(:pagos).where("rentas.id ==? AND pagos.categoria_id == ?", renta.id, 1 ).sum(:monto)
+     current_user.rentas.joins(:pagos).where("rentas.id ==? AND pagos.categoria_id == ?", renta.id, 1 ).sum(:monto)
     end
 
     def getRetraso(renta, mes)
@@ -97,6 +112,41 @@ module ApplicationHelper
       end
     end
 
+    def getGastosCat(cat)
+      current_user.gastos.where(categoria_id: cat).sum(:monto)
+    end
+
+    def getGastosTotal(pro)
+      current_user.gastos.where(propiedad: pro).sum(:monto)
+    end
+
+    def getPagosCat(cat)
+      current_user.pagos.where(categoria_id: cat).sum(:monto)
+    end
+
+    def getPagosProTotal(pro)
+      current_user.rentas.joins(:pagos).where(propiedad: pro).sum(:monto)
+    end
+
+    def getPagosPro(pro)
+      current_user.pagos.joins(:rentas).where("rentas.propiedad_id = ? AND pagado = ?", pro.id, true)
+    end
+
+    def getPagosAtraPro(pro)
+      current_user.pagos.joins(:rentas).where(["rentas.propiedad_id =? AND strftime('%m', pagos.mes) == ? AND pagado == ?", pro.id, Time.now.strftime("%m"), false])
+    end
+
+    def getPagosInqTotal(inq)
+      current_user.rentas.joins(:pagos).where(inquilino: inq).sum(:monto)
+    end
+
+    def getPagosInq(inq)
+      current_user.pagos.joins(:rentas).where("rentas.inquilino_id = ? AND pagado = ?", inq.id, true)
+    end
+
+    def getPagosAtraInq(inq)
+      current_user.pagos.joins(:rentas).where(["rentas.inquilino_id =? AND strftime('%m', pagos.mes) == ? AND pagado == ?", inq.id, Time.now.strftime("%m"), false])
+    end
 
     def distance_of_time_in_words(from_time, to_time = 0, include_seconds = false)
      from_time = from_time.to_time if from_time.respond_to?(:to_time)
