@@ -16,19 +16,19 @@ module ApplicationHelper
     end
 
     def get_propiedads(id)
-        current_user.propiedads.find(id)
+      current_user.propiedads.find(id)
     end
 
     def rentas_activas
-     current_user.rentas.where( "final > ? ", Time.now)
+     current_user.rentas.where( "rentas.final > ? ", Time.now)
     end
 
     def rentas_terminadas
-     current_user.rentas.where( "final < ? ", Time.now)
+     current_user.rentas.where( "rentas.final < ? ", Time.now)
     end
 
     def pagos_hechos
-      rentas_activas.joins(:pagos).select("pagos.id as pid, inquilino_id, propiedad_id, dia, costo, monto, mes, rentas.created_at, rentas.id ").where(["strftime('%m', pagos.mes) >= ? AND pagado == ? AND pagos.categoria_id == ?", Time.now.strftime("%m"), true, 1])
+      rentas_activas.joins(:pagos, :plazos).select("pagos.id as pid, inquilino_id, propiedad_id, dia, plazos.costo, monto, mes, rentas.created_at, rentas.id ").where(["strftime('%m', pagos.mes) >= ? AND pagado == ? AND pagos.categoria_id == ? AND plazos.final > ?", Time.now.strftime("%m"), true, 1, Time.now])
     end
 
 
@@ -45,7 +45,7 @@ module ApplicationHelper
     end
 
     def pagos_atrasados
-      rentas_activas.joins(:pagos).select("pagos.id as pid, inquilino_id, propiedad_id, dia, costo, mes, rentas.created_at, rentas.id").where(["strftime('%m', pagos.mes) == ? AND pagado == ?", Time.now.strftime("%m"), false])
+      rentas_activas.joins(:pagos, :plazos).select("pagos.id as pid, inquilino_id, propiedad_id, dia, plazos.costo, mes, rentas.created_at, rentas.id").where(["strftime('%m', pagos.mes) == ? AND pagado == ? AND plazos.final > ?", Time.now.strftime("%m"), false, Time.now])
     end
 
     def pagos_proximos
@@ -68,20 +68,19 @@ module ApplicationHelper
 
     def getBalance(renta)
       inicio = renta["created_at"].to_date
+      plazo = current_user.plazos.select(:costo).where("rentas_id == ? AND final > ?", renta["id"], Time.now).first
       final = Time.now
       inicio = inicio.change(day: renta["dia"])
       meses = (final.year * 12 + final.month) - (inicio.year * 12 + inicio.month)
       if inicio.day < final.day
         meses = meses +1
       end
-      return  meses * renta["costo"] - getTotalPagado(renta)
+      return  meses * plazo.costo - getTotalPagado(renta)
     end
-
-
-
 
     def getBalanceMes(renta, mes)
       inicio = renta["created_at"].to_date
+      plazo = current_user.plazos.select(:costo).where("rentas_id == ? AND final > ?", renta["id"], Time.now).first
       final = Time.now
       final = final.change(month: mes)
       inicio = inicio.change(day: renta["dia"])
@@ -90,7 +89,7 @@ module ApplicationHelper
         if inicio.day < final.day
           meses = meses +1
         end
-        return (meses * renta["costo"]) - getTotalPagado(renta)
+        return (meses * plazo.costo) - getTotalPagado(renta)
       else
         return 0
       end

@@ -3,15 +3,16 @@ class Rentas < ActiveRecord::Base
   belongs_to :propiedad
   belongs_to :user
   has_many :pagos, dependent: :destroy
+  has_many :plazos, dependent: :destroy
 
 
-  validates :final, presence: true
   validates :user_id, presence: true
   validates :inquilino_id, presence: true
   validates :propiedad_id, presence: true
 
   accepts_nested_attributes_for :inquilino
   accepts_nested_attributes_for :propiedad
+  accepts_nested_attributes_for :plazos
 
   def to_label
     inquilino = Inquilino.find(inquilino_id).nombre

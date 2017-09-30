@@ -29,6 +29,10 @@ class RentasController < ApplicationController
     @renta.user = current_user
 
     if @renta.save
+      plazo = Plazo.new(plazo_params)
+      plazo.user = current_user
+      plazo.rentas = @renta
+      plazo.save
       time = Time.now
       loop do
         pago = Pago.new({ :mes => time, :rentas_id => @renta.id, :categoria_id => 1, :pagado => false})
@@ -139,5 +143,9 @@ class RentasController < ApplicationController
 
     def propiedad_params
       params[:rentas].require(:propiedad_attributes).permit(:nombre, :calle, :colonia, :municipio, :numero, :numeroe, :cp, :estado)
+    end
+
+    def plazo_params
+      params.require(:rentas).permit(:costo, :final)
     end
 end

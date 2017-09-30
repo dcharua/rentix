@@ -37,13 +37,15 @@
                                     </tr>
                                     <%@ren.each do |renta|%>
                                   <tr>
-                                      <td><%= get_inquilinos(renta.inquilino_id).nombre%></td>
-                                      <td> <%= get_propiedads(renta.propiedad_id).to_label%></td>
+                                      <td><%=renta.inquilino.nombre%></td>
+                                      <td> <%= renta.propiedad.to_label%></td>
                                       <td><%= renta.costo%></td>
-                                      <td> <%= renta.created_at%></td>
+                                      <td> <%= renta.created_at.to_date%></td>
                                       <td><%= renta.final%></td>
                                       <td><%= renta.dia%></td>
-                                      <td class="client-status">  <%= link_to "Editar", edit_renta_path(renta), class: "btn btn-xs btn-primary" %>
+                                      <td class="client-status">
+                                        <%= link_to "Ver", renta_path(renta), class: "btn btn-xs btn-info" %>
+                                        <%= link_to "Editar", edit_renta_path(renta), class: "btn btn-xs btn-primary" %>
                                         <%= link_to "Terminar", rentas_terminar_path(renta),
                                                                           data: { confirm: "¿Estas seguro que quieres terminar esta renta?"},
                                                                           class: "btn btn-xs btn-danger" %></td>
@@ -81,7 +83,9 @@
                                       <td><%= iq.nacionalidad%></td>
                                       <td> <%= iq.curp%></td>
                                       <td><%= iq.rfc%></td>
-                                      <td class="client-status">  <%= link_to "Editar", edit_inquilino_path(iq), class: "btn btn-xs btn-primary" %>
+                                      <td class="client-status">
+                                        <%= link_to "Ver", inquilino_path(iq), class: "btn btn-xs btn-info" %>
+                                        <%= link_to "Editar", edit_inquilino_path(iq), class: "btn btn-xs btn-primary" %>
                                         <%= link_to "Borrar", inquilino_path(iq), method: :delete,
                                                                           data: { confirm: "¿Estas seguro que quieres borrar a este inquilino?"},
                                                                           class: "btn btn-xs btn-danger" %></td>
@@ -119,7 +123,9 @@
                                       <td><%= pr.estado%></td>
                                       <td> <%= pr.cp%></td>
                                       <td><%= pr.municipio%></td>
-                                      <td class="client-status">  <%= link_to "Editar", edit_propiedad_path(pr), class: "btn btn-xs btn-primary" %>
+                                      <td class="client-status">
+                                        <%= link_to "Ver", propiedad_path(pr), class: "btn btn-xs btn-info" %>
+                                        <%= link_to "Editar", edit_propiedad_path(pr), class: "btn btn-xs btn-primary" %>
                                         <%= link_to "Borrar", propiedad_path(pr), method: :delete,
                                                                           data: { confirm: "¿Estas seguro que quieres borrar a este propiedad?"},
                                                                           class: "btn btn-xs btn-danger" %></td>
@@ -153,8 +159,8 @@
                   </tr>
                   <% @pag.each do |pago| %>
                 <tr>
-                    <td><%= get_inquilinos(pago.rentas.inquilino_id).nombre%></td>
-                    <td> <%= get_propiedads(pago.rentas.propiedad_id).nombre%></td>
+                    <td><%= pago.rentas.inquilino.nombre%></td>
+                    <td> <%= pago.rentas.propiedad.to_label%></td>
                     <td><%= pago.categoria.to_label%></td>
                     <td><%= pago.monto%></td>
                     <td> <%= pago.fecha%></td>
@@ -192,10 +198,10 @@
                         </tr>
                         <% @gas.each do |gastoR|  %>
                       <tr>
-                        <% if gastoR.propiedads_id.nil?%>
+                        <% if gastoR.propiedad_id.nil?%>
                           <td> N/A </td>
                             <% else%>
-                          <td> <%= get_propiedads(gastoR.propiedads_id).to_label%></td>
+                          <td> <%= gastoR.propiedad.to_label%></td>
                             <% end%>
                           <td><%= gastoR.categoria.to_label%></td>
                           <td><%= gastoR.monto%></td>
