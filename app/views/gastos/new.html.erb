@@ -21,7 +21,7 @@ $(document).ready(function() {
                       <%= f.association :propiedad , :collection => current_user.propiedads.order(:nombre), :include_blank => "Ninguna", input_html: {class: "pa form-control"}%>
                     </div>
                     <div class="col-md-6">
-                      <%= f.association :categoria , :collection => Categoria.where("id > ?", 2).order(:categoria),  input_html: {class: "pa form-control"}%>
+                      <%= f.association :categoria , :collection => Categoria.where("id > ?", 2).order(:categoria), :include_blank => false, input_html: {class: "pa form-control"}%>
                     </div>
                   </div>
                     <div class="form-group">
@@ -31,7 +31,7 @@ $(document).ready(function() {
                         </div>
                         <%= f.label :fecha, "Fecha del gasto", class: "col-md-2 control-label",  required: true %>
                           <div class="col-md-4">
-                            <%= f.text_field :fecha, data:{ provide:'datepicker' }, class:"datepicker form-control", required: true%>
+                            <%= f.text_field :fecha, data:{ provide:'datepicker' }, value: Date.today, class:"datepicker form-control", required: true%>
                           </div>
                     </div>
 

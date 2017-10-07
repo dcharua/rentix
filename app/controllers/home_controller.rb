@@ -34,8 +34,10 @@ def index
 end
 
 def getIngreso(mes)
-  fecha = Date.new(Time.now.year, mes, 28)
-  current_user.rentas.where( "final > ? AND created_at < ?", fecha, fecha).sum(:costo)
+  fecha = Time.new(Time.now.year, mes, 1)
+  fecha = fecha.end_of_month.to_date
+  puts fecha
+  plazo = current_user.plazos.where( "final >= ? AND inicio <= ?", fecha, fecha).sum(:costo)
 end
 
 def getIngresoReal(mes)

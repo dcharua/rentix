@@ -12,7 +12,7 @@ $(document).ready(function() {
     <div class="form-group">
       <label class="col-md-1 ">Renta</label>
       <div class="col-md-5">
-      <%= select_tag "rentas",  options_from_collection_for_select(rentas_activas.all, "id", "to_label"), class: 'sele form-control hidden', style:"width: 100%" %>
+      <%= select_tag "rentas",  options_from_collection_for_select(current_user.rentas.all, "id", "to_label"), class: 'sele form-control hidden', style:"width: 100%" %>
     </div>
     <label class="col-md-1 ">Categoría</label>
     <div class="col-md-5">

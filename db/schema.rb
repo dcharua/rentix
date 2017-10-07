@@ -57,10 +57,9 @@ ActiveRecord::Schema.define(version: 20170831000107) do
     t.date     "fecha"
     t.date     "mes"
     t.string   "comentarios"
-    t.boolean  "pagado",       default: false, null: false
     t.integer  "user_id"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   add_index "pagos", ["categoria_id"], name: "index_pagos_on_categoria_id"
@@ -69,6 +68,7 @@ ActiveRecord::Schema.define(version: 20170831000107) do
 
   create_table "plazos", force: :cascade do |t|
     t.integer  "rentas_id"
+    t.date     "inicio"
     t.date     "final"
     t.integer  "costo"
     t.integer  "user_id"
@@ -98,6 +98,7 @@ ActiveRecord::Schema.define(version: 20170831000107) do
   create_table "rentas", force: :cascade do |t|
     t.integer  "inquilino_id"
     t.integer  "propiedad_id"
+    t.date     "inicio"
     t.date     "final"
     t.integer  "costo"
     t.integer  "dia"

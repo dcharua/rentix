@@ -29,45 +29,48 @@ class RentasController < ApplicationController
     @renta.user = current_user
 
     if @renta.save
+      time = @renta.inicio
+      if time.day > @renta.dia
+        time = time + 1.month
+      end
+      time = time.change(day: @renta.dia)
       plazo = Plazo.new(plazo_params)
       plazo.user = current_user
       plazo.rentas = @renta
-      plazo.save
-      time = Time.now
-      loop do
-        pago = Pago.new({ :mes => time, :rentas_id => @renta.id, :categoria_id => 1, :pagado => false})
-        pago.user = current_user
-        pago.save
-        time = time + 1.month
-      break if @renta.final < time
-    end
-      flash[:success] = "Se agregó la renta"
-      redirect_to rentas_path
-    else
-      render 'new'
+      plazo.inicio = time
+      if plazo.save
+        flash[:success] = "Se agregó la renta"
+        redirect_to rentas_path
+      else
+        render 'new'
+      end
     end
   end
 
 
 
   def update
-    tmp = @renta.final
     time = Time.now
-
     if @renta.update(renta_params)
-      loop do
-        if @renta.pagos.where("strftime('%Y-%m', mes) = ?", time.strftime("%Y-%m")).blank?
-          pago = Pago.new({ :mes => time, :rentas_id => @renta.id, :categoria_id => 1, :pagado => false})
-          pago.user = current_user
-          pago.save
-        end
-        time = time + 1.month
-        break if @renta.final < time
+      if (plazo = current_user.plazos.where("rentas_id == ? AND plazos.final > ?", @renta.id, Time.now).first)
+        plazo.final = Time.now
+        plazo.save
       end
+    plazo = Plazo.new(plazo_params)
+    plazo.user = current_user
+    plazo.rentas = @renta
+    time = Time.now
+    if time.day > @renta.dia
+      time = time + 1.month
+    end
+    time = time.change(day: @renta.dia)
+    plazo.inicio = time
+      if plazo.save
         flash[:success] = "Se edito la renta"
-      redirect_to rentas_path(params[:id])
-    else
-      render 'edit'
+        redirect_to rentas_path(params[:id])
+      else
+        render 'edit'
+      end
     end
   end
 
@@ -82,7 +85,9 @@ class RentasController < ApplicationController
 
   def terminar
     @renta.final = Time.now
-    if @renta.save
+    plazo = current_user.plazos.where("rentas_id == ? AND plazos.final > ?", @renta.id, Time.now).first
+    plazo.final = Time.now
+    if (@renta.save && plazo.save)
       flash[:success] = "Se termino la renta"
     else
       flash[:danger] = "Un error no permitio terminar la renta"
@@ -134,7 +139,7 @@ class RentasController < ApplicationController
   end
 
     def renta_params
-      params.require(:rentas).permit(:costo, :final, :dia, :inquilino_id, :propiedad_id)
+      params.require(:rentas).permit(:costo, :final, :inicio, :dia, :inquilino_id, :propiedad_id)
     end
 
     def inquilino_params
@@ -146,6 +151,6 @@ class RentasController < ApplicationController
     end
 
     def plazo_params
-      params.require(:rentas).permit(:costo, :final)
+      params.require(:rentas).permit(:costo, :final, :inico)
     end
 end

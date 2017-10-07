@@ -41,6 +41,10 @@
                     <div class ="form-horizontal">
 
                       <div class="form-group">
+                        <%= f.label :inicio, "Fecha de inicio", class: "col-md-2 control-label" %>
+                          <div class="col-md-4">
+                            <%= f.text_field :inicio,  value: Time.now.strftime("%Y-%m-%d"), id: "datepicker", class:"datepicker form-control", required: true%>
+                          </div>
                           <%= f.label :final, "Fecha de terminación", class: "col-md-2 control-label" %>
                             <div class="col-md-4">
                               <%= f.text_field :final,  max: Date.today, id: "datepicker", class:"datepicker form-control", required: true%>

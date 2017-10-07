@@ -13,7 +13,6 @@ class Pago < ActiveRecord::Base
  def self.renta_matches(param)
    renta = Rentas.search(param)
    pago = Pago.joins(:rentas).where(rentas: renta)
-   pago.where(pagado: true)
  end
 
 end

@@ -32,7 +32,7 @@
                     <td><%= get_inquilinos(renta.inquilino_id).nombre%></td>
                     <td> <%= get_propiedads(renta.propiedad_id).nombre%></td>
                     <td><%= renta.costo%></td>
-                    <td> <%= renta.created_at.to_date%></td>
+                    <td> <%= renta.inicio%></td>
                     <td><%= renta.final%></td>
                     <td><%= renta.dia%></td>
                     <td class="client-status">
