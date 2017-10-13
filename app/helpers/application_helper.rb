@@ -32,15 +32,15 @@ module ApplicationHelper
     end
 
     def pagos_mantenimiento
-      rentas_activas.joins(:pagos).select("pagos.id as pid, inquilino_id, propiedad_id, pagos.fecha, monto, comentarios,  rentas.id ").where(["strftime('%m', pagos.mes) >= ? AND pagos.categoria_id == ?", Time.now.strftime("%m"), 3])
+      rentas_activas.joins(:pagos).select("pagos.id as pid, inquilino_id, propiedad_id, pagos.fecha, monto, comentarios,  rentas.id ").where([" extract(month from pagos.mes) >= ? AND pagos.categoria_id = ?", Time.now.strftime("%m"), 3])
     end
 
     def pagos_garantia
-      rentas_activas.joins(:pagos).select("pagos.id as pid, inquilino_id, propiedad_id, pagos.fecha, monto, comentarios,  rentas.id ").where(["strftime('%m', pagos.mes) >= ? AND pagos.categoria_id == ?", Time.now.strftime("%m"), 2])
+      rentas_activas.joins(:pagos).select("pagos.id as pid, inquilino_id, propiedad_id, pagos.fecha, monto, comentarios,  rentas.id ").where(["extract(month from pagos.mes) >= ? AND pagos.categoria_id = ?", Time.now.strftime("%m"), 2])
     end
 
     def pagos_otro
-      rentas_activas.joins(:pagos).select("pagos.id as pid, inquilino_id, propiedad_id, pagos.fecha, monto, comentarios,  rentas.id ").where(["strftime('%m', pagos.mes) >= ? AND pagos.categoria_id == ?", Time.now.strftime("%m"), 4])
+      rentas_activas.joins(:pagos).select("pagos.id as pid, inquilino_id, propiedad_id, pagos.fecha, monto, comentarios,  rentas.id ").where(["extract(month from pagos.mes) >= ? AND pagos.categoria_id = ?", Time.now.strftime("%m"), 4])
     end
 
     def rentas_por_vencer
@@ -51,7 +51,7 @@ module ApplicationHelper
     def getBalance(renta)
       balance = 0
       inicio = renta["inicio"].to_date
-      plazos = current_user.plazos.select(:costo).where("rentas_id == ? AND final > ?", renta["id"], Time.now)
+      plazos = current_user.plazos.select(:costo).where("rentas_id = ? AND final > ?", renta["id"], Time.now)
       final = Time.now
       if inicio.day > renta["dia"]
         inicio = inicio + 1.month
@@ -59,7 +59,7 @@ module ApplicationHelper
       inicio = inicio.change(day: renta["dia"])
         time = inicio
         loop do
-          balance += current_user.plazos.select(:costo).where("rentas_id == ? AND final > ? AND inicio <= ?", renta["id"], time, time).sum(:costo)
+          balance += current_user.plazos.select(:costo).where("rentas_id = ? AND final > ? AND inicio <= ?", renta["id"], time, time).sum(:costo)
           time = time + 1.month
         break if Time.now < time
     end
@@ -77,7 +77,7 @@ module ApplicationHelper
         return 0
       end
       inicio = renta.inicio.to_date
-      plazo = current_user.plazos.where("rentas_id == ? AND inicio < ? AND final > ?", renta.id, fecha, fecha).first
+      plazo = current_user.plazos.where("rentas_id = ? AND inicio < ? AND final > ?", renta.id, fecha, fecha).first
       if plazo
         return plazo.costo - getPagadoMes(renta, mes)
       else
@@ -86,11 +86,11 @@ module ApplicationHelper
     end
 
     def getTotalPagado(renta)
-     current_user.rentas.joins(:pagos).where("rentas.id ==? AND pagos.categoria_id == ?", renta.id, 1 ).sum(:monto)
+     current_user.rentas.joins(:pagos).where("rentas.id = ? AND pagos.categoria_id = ?", renta.id, 1 ).sum(:monto)
     end
 
     def getPagadoMes(renta, mes)
-     current_user.rentas.joins(:pagos).where("rentas.id ==? AND pagos.categoria_id == ? AND pagos.mes == ?", renta.id, 1, Date.new(Time.now.year, mes, 01) ).sum(:monto)
+     current_user.rentas.joins(:pagos).where("rentas.id = ? AND pagos.categoria_id = ? AND pagos.mes = ?", renta.id, 1, Date.new(Time.now.year, mes, 01) ).sum(:monto)
     end
 
     def getRetraso(renta, mes)
@@ -98,11 +98,11 @@ module ApplicationHelper
       if fecha > Time.now
         return 0
       end
-      plazo = current_user.plazos.where("rentas_id == ? AND inicio < ? AND final > ?", renta.id, fecha, fecha).first
+      plazo = current_user.plazos.where("rentas_id = ? AND inicio < ? AND final > ?", renta.id, fecha, fecha).first
       dia = Time.now
       dia = dia.change(day: renta.dia)
       dia = dia.change(month: mes.to_i)
-      rent = renta.pagos.select("pagos.fecha as fecha").where("strftime('%m', pagos.mes) == ? AND pagos.categoria_id == ?", mes, 1).first
+      rent = renta.pagos.select("pagos.fecha as fecha").where("extract(month from pagos.mes) = ? AND pagos.categoria_id = ?", mes, 1).first
 
       if plazo && rent.nil?
         return (Time.now.to_date - fecha).to_i

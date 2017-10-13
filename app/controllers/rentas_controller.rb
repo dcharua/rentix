@@ -52,7 +52,7 @@ class RentasController < ApplicationController
   def update
     time = Time.now
     if @renta.update(renta_params)
-      if (plazo = current_user.plazos.where("rentas_id == ? AND plazos.final > ?", @renta.id, Time.now).first)
+      if (plazo = current_user.plazos.where("rentas_id = ? AND plazos.final > ?", @renta.id, Time.now).first)
         plazo.final = Time.now
         plazo.save
       end
@@ -85,7 +85,7 @@ class RentasController < ApplicationController
 
   def terminar
     @renta.final = Time.now
-    plazo = current_user.plazos.where("rentas_id == ? AND plazos.final > ?", @renta.id, Time.now).first
+    plazo = current_user.plazos.where("rentas_id = ? AND plazos.final > ?", @renta.id, Time.now).first
     plazo.final = Time.now
     if (@renta.save && plazo.save)
       flash[:success] = "Se termino la renta"

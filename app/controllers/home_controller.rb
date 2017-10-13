@@ -36,13 +36,12 @@ end
 def getIngreso(mes)
   fecha = Time.new(Time.now.year, mes, 1)
   fecha = fecha.end_of_month.to_date
-  puts fecha
   plazo = current_user.plazos.where( "final >= ? AND inicio <= ?", fecha, fecha).sum(:costo)
 end
 
 def getIngresoReal(mes)
-  current_user.rentas.joins(:pagos).where("strftime('%m', pagos.mes) == ?", mes).sum(:monto)
-  #current_user.rentas.joins(:pagos).where("extract(month from pagos.mes) = ?", mes).sum(:monto)
+  #current_user.rentas.joins(:pagos).where("strftime('%m', pagos.mes) == ?", mes).sum(:monto)
+  current_user.rentas.joins(:pagos).where("extract(month from pagos.mes) = ?", mes).sum(:monto)
 
 end
 
