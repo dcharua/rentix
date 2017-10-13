@@ -2,9 +2,8 @@
 
 <div class="clients-list">
     <ul class="nav nav-tabs">
-        <span class="pull-right small text-muted">Tienes <%= @rentas.count %> Rentas</span>
-        <li class="active"><a data-toggle="tab" href="#tab-1"><i class="fa fa-home"></i> Activas</a></li>
-        <li class = ""><a data-toggle="tab" href="#tab-2"><i class="fa fa-home"></i> Terminadas</a></li>
+        <li class="active"><a data-toggle="tab" href="#tab-1"><i class="fa fa-home"></i> Activas (<%=rentas_activas.count%>)</a></li>
+        <li class = ""><a data-toggle="tab" href="#tab-2"><i class="fa fa-home"></i> Terminadas (<%=rentas_terminadas.count%>)</a></li>
     </ul>
 
 

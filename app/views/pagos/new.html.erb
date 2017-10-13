@@ -18,16 +18,16 @@ $(document).ready(function() {
               <%= simple_form_for @pago, html: {id:"form", class: "wizard-big form-horizontal", required: true} do |f| %>
                     <div class="form-group">
                       <div class="col-md-6">
-                      <%= f.association :rentas , :collection => current_user.rentas,  include_blank: false, input_html: {class: "pa form-control"}%>
+                      <%= f.association  :rentas, :label => "Renta", :collection => current_user.rentas,  include_blank: false, input_html: {class: "pa form-control"}%>
                     </div>
                     <div class="col-md-6">
-                      <%= f.association :categoria , :collection => Categoria.where("id < ?", 5).order(:id), include_blank: false, input_html: {class: "pa form-control"}%>
+                      <%= f.association :categoria , :label => "Categoría", :collection => Categoria.where("id < ?", 5).order(:id), include_blank: false, input_html: {class: "pa form-control"}%>
                     </div>
                   </div>
                     <div class="form-group">
-                    <%= f.label :monto, 'Monto', class: "col-md-1 control-label", required: true %>
+                    <%= f.label :monto, 'Monto', class: "col-md-1 control-label" %>
                         <div class="col-md-4">
-                          <%= f.number_field :monto, class: "form-control"%>
+                          <%= f.number_field :monto, class: "form-control", required: true%>
                         </div>
                         <%= f.label :fecha, "Fecha del pago", class: "col-md-2 control-label",  required: true %>
                           <div class="col-md-4">

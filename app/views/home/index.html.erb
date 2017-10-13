@@ -157,7 +157,7 @@
                                   <% else %>
                                   <td><span class="label label-primary"> $<%=@balance%> </span> </td>
                                   <%end%>
-                                  <td><%= link_to "Pagar", pagos_nuevo_path(renta), class: "btn btn-xs btn-rounded btn-outline btn-primary" %></td>
+                                  <td><%= link_to "Pagar", pagos_nuevo_path(renta), class: "btn btn-xs btn-rounded btn-outline btn-primary demo3" %></td>
                                   <td><%= link_to "Ver", renta_path(renta), class: "btn btn-xs btn-rounded btn-outline btn-info" %></td>
                               </tr>
                                 <%end%>
@@ -284,7 +284,7 @@
             labels: ['Mantenimiento', 'Administracion',  'Reparaciones', 'Servicios','Limpieza','Impuestos',  'Renovacion','Otros' ],
             datasets: [{
                 data: [<%=getGastosCat("3")%>, <%=getGastosCat("5")%>, <%=getGastosCat("6")%>, <%=getGastosCat("7")%>, <%=getGastosCat("8")%>, <%=getGastosCat("9")%>, <%=getGastosCat("10")%>, <%=getGastosCat("4")%>],
-                backgroundColor: ["#a3e1d4","#dedede","#b5b8cf", "#b5b34f", "#a5b8cf", "#b538cf", "#b3b8cf","#c3b8cf" ]
+                backgroundColor: ["#4D4D4D","#5DA5DA","#FAA43A", "#60BD68", "#F17CB0", "#B276B2", "#DECF3F","#F15854" ]
             }]
         } ;
 
@@ -302,7 +302,7 @@
             labels: ['Renta', 'Garantía',  'Mantenimiento', 'Otros'],
             datasets: [{
                 data: [<%=getPagosCat("1")%>, <%=getPagosCat("2")%>, <%=getPagosCat("3")%>, <%=getPagosCat("4")%>],
-                backgroundColor: ["#a3e1d4","#dedede","#b5b8cf", "#b5b34f"]
+                backgroundColor: ["#F15854","#4D4D4D","#5DA5DA","#FAA43A"]
             }]
         } ;
 

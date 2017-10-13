@@ -1,10 +1,9 @@
 <div class="clients-list">
     <ul class="nav nav-tabs">
-        <span class="pull-right small text-muted">Tienes <%=current_user.pagos.count%> Pagos</span>
-        <li class="active"><a data-toggle="tab" href="#tab-1">Rentas</a></li>
-        <li class = ""><a data-toggle="tab" href="#tab-2"> Mantenimiento</a></li>
-        <li class = ""><a data-toggle="tab" href="#tab-3"> Garantía</a></li>
-        <li class = ""><a data-toggle="tab" href="#tab-4"> Otros</a></li>
+        <li class="active"><a data-toggle="tab" href="#tab-1">Rentas (<%=@pagosR.size%>)</a></li>
+        <li class = ""><a data-toggle="tab" href="#tab-2"> Mantenimiento (<%=@pagosM.size%>)</a></li>
+        <li class = ""><a data-toggle="tab" href="#tab-3"> Garantía (<%=@pagosG.size%>)</a></li>
+        <li class = ""><a data-toggle="tab" href="#tab-4"> Otros (<%=@pagosO.size%>)</a></li>
     </ul>
     <div class="tab-content">
         <div id="tab-1" class="tab-pane active">
@@ -33,8 +32,8 @@
                             <td> <%= pagoR.comentarios%></td>
                             <td class="client-status">  <%= link_to "Editar", edit_pago_path(pagoR), class: "btn btn-xs btn-primary" %>
                               <%= link_to "Borrar", pago_path(pagoR), method: :delete,
-                                                                data: { confirm: "¿Estas seguro que quieres borrar a este pago?"},
-                                                                class: "btn btn-xs btn-danger" %></td>
+                              data: { confirm: "¿Estas seguro que quieres borrar a este inquilino?"},
+                                                                class: "btn btn-xs btn-danger demo3" %></td>
                         </tr>
                         <%end %>
                         <%end%>

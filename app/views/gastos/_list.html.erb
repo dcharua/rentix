@@ -1,12 +1,12 @@
 <div class="clients-list">
     <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#tab-1"></i> Mantenimiento</a></li>
-        <li class = ""><a data-toggle="tab" href="#tab-2"</i> Reparaciones</a></li>
-        <li class = ""><a data-toggle="tab" href="#tab-3"></i> Servicios</a></li>
-        <li class = ""><a data-toggle="tab" href="#tab-4"></i> Limpieza</a></li>
-        <li class = ""><a data-toggle="tab" href="#tab-5"></i> Administración</a></li>
-        <li class = ""><a data-toggle="tab" href="#tab-6"></i> Impuestos</a></li>
-        <li class = ""><a data-toggle="tab" href="#tab-7"></i> Otros</a></li>
+        <li class="active"><a data-toggle="tab" href="#tab-1"></i> Mantenimiento (<%= @gastosM.size%>)</a></li>
+        <li class = ""><a data-toggle="tab" href="#tab-2"</i> Reparaciones (<%= @gastosR.size%>)</a></li>
+        <li class = ""><a data-toggle="tab" href="#tab-3"></i> Servicios (<%= @gastosS.size%>)</a></li>
+        <li class = ""><a data-toggle="tab" href="#tab-4"></i> Limpieza (<%= @gastosL.size%>)</a></li>
+        <li class = ""><a data-toggle="tab" href="#tab-5"></i> Administración (<%= @gastosA.size%>)</a></li>
+        <li class = ""><a data-toggle="tab" href="#tab-6"></i> Impuestos (<%= @gastosI.size%>)</a></li>
+        <li class = ""><a data-toggle="tab" href="#tab-7"></i> Otros (<%= @gastosO.size%>)</a></li>
 
     </ul>
     <div class="tab-content">
@@ -48,7 +48,7 @@
             </div>
         </div>
 
-        <div id="tab-2" class="tab-pane active">
+        <div id="tab-2" class="tab-pane">
             <div class="full-height-scroll">
                 <div class="table-responsive">
                     <table class="table table-striped table-hover">
@@ -67,7 +67,7 @@
                           <% if gastoR.propiedad_id.nil?%>
                             <td> N/A </td>
                               <% else%>
-                            <td> <%= gasto.propiedad.to_label%></td>
+                            <td> <%= gastoR.propiedad.to_label%></td>
                               <% end%>
                             <td><%= gastoR.monto%></td>
                             <td> <%= gastoR.fecha%></td>
@@ -86,7 +86,7 @@
             </div>
         </div>
 
-        <div id="tab-3" class="tab-pane active">
+        <div id="tab-3" class="tab-pane">
             <div class="full-height-scroll">
                 <div class="table-responsive">
                     <table class="table table-striped table-hover">
@@ -124,7 +124,7 @@
             </div>
         </div>
 
-        <div id="tab-4" class="tab-pane active">
+        <div id="tab-4" class="tab-pane ">
             <div class="full-height-scroll">
                 <div class="table-responsive">
                     <table class="table table-striped table-hover">
@@ -162,7 +162,7 @@
             </div>
         </div>
 
-        <div id="tab-5" class="tab-pane active">
+        <div id="tab-5" class="tab-pane ">
             <div class="full-height-scroll">
                 <div class="table-responsive">
                     <table class="table table-striped table-hover">
@@ -201,7 +201,7 @@
         </div>
 
 
-        <div id="tab-6" class="tab-pane active">
+        <div id="tab-6" class="tab-pane">
             <div class="full-height-scroll">
                 <div class="table-responsive">
                     <table class="table table-striped table-hover">
@@ -239,7 +239,7 @@
             </div>
         </div>
 
-        <div id="tab-7" class="tab-pane active">
+        <div id="tab-7" class="tab-pane">
             <div class="full-height-scroll">
                 <div class="table-responsive">
                     <table class="table table-striped table-hover">

@@ -1,7 +1,6 @@
 <div class="clients-list">
     <ul class="nav nav-tabs">
-        <span class="pull-right small text-muted">Tienes <%=@propiedads.count%> Propiedades</span>
-        <li class="active"><a data-toggle="tab" href="#tab-1"><i class="fa fa-home"></i> Propiedades</a></li>
+        <li class="active"><a data-toggle="tab" href="#tab-1"><i class="fa fa-home"></i> Propiedades (<%= @propiedads.count%>)</a></li>
     </ul>
     <div class="tab-content">
         <div id="tab-1" class="tab-pane active">

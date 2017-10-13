@@ -60,6 +60,7 @@
 //= require jvectormap/jquery-jvectormap-2.0.2.min.js
 //= require jvectormap/jquery-jvectormap-world-mill-en.js
 //= require toastr/toastr.min.js
+//= require sweetalert/sweetalert.min.js
 
 var hide_spinner = function(){
   $('#spinner').hide();
@@ -71,6 +72,20 @@ var show_spinner = function(){
 
 $(function() {
     $('.datepicker').datepicker({format: 'yyyy-mm-dd'});
+    $('.demo3').click(function () {
+               swal({
+                   title: "Are you sure?",
+                   text: "You will not be able to recover this imaginary file!",
+                   type: "warning",
+                   showCancelButton: true,
+                   confirmButtonColor: "#DD6B55",
+                   confirmButtonText: "Yes, delete it!",
+                   closeOnConfirm: false
+               }, function () {
+                   swal("Deleted!", "Your imaginary file has been deleted.", "success");
+               });
+           });
+
 });
 
 

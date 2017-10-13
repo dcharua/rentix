@@ -51,14 +51,14 @@
                             </div>
                         </div>
                       <div class="form-group">
-                        <%= f.label :costo, "Mensualidad", class: "col-md-2 control-label", required: true%>
+                        <%= f.label :costo, "Mensualidad", class: "col-md-2 control-label"%>
                           <div class="col-md-4">
-                            <%=f.number_field :costo, min: 0, class:"form-control"%>
+                            <%=f.number_field :costo, min: 0, class:"form-control" ,required: true%>
                           </div>
 
-                          <%= f.label :dia, "* Dia de pago", class: "col-md-2 control-label", required: true%>
+                          <%= f.label :dia, "* Dia de pago", class: "col-md-2 control-label"%>
                             <div class="col-md-4">
-                              <%= f.number_field :dia, in: 1..28, class:"form-control"%>
+                              <%= f.number_field :dia, in: 1..28, class:"form-control",required: true%>
                           </div>
                         </div>
 

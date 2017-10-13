@@ -1,7 +1,7 @@
 class Propiedad < ActiveRecord::Base
-  has_many :rentas, class_name: "::Rentas", foreign_key: "propiedad_id"
+  has_many :rentas, class_name: "::Rentas", foreign_key: "propiedad_id", dependent: :destroy
   has_many :inquilinos, through: :rentas, class_name: "::Rentas", foreign_key: "propiedad_id"
-  has_many :gastos
+  has_many :gastos, dependent: :destroy
   belongs_to :user
   validates :user_id, presence: true
 

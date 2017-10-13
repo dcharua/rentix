@@ -26,9 +26,9 @@
                         <div class="">
                             <div>
                                 <h2 class="no-margins">
-                                    <a class = "black" href="<%=propiedads_path(@propiedad)%>"><%=@propiedad.nombre%></a>
+                                    <a class = "black" href="<%=propiedad_path(@propiedad)%>"><%=@propiedad.nombre%></a>
                                 </h2>
-                                <h3>  <a class= "black" href="<%=inquilinos_path(@inquilino)%>"><%=@inquilino.nombre%></a></h3>
+                                <h3>  <a class= "black" href="<%=inquilino_path(@inquilino)%>"><%=@inquilino.nombre%></a></h3>
                                 <small>
                                     Antiguedad <%= distance_of_time_in_words(@renta.inicio, Time.now) %>
                                 </small>
@@ -189,13 +189,13 @@
                                         <th><strong>Categoría</strong></td>
                                         <th><strong>Monto</strong></td>
                                         <th><strong>Mes</strong></td>
-                                        <th><strong>Fecha de pagos</strong></td>
+                                        <th><strong>Fecha del pago</strong></td>
                                         <th><strong>Comentarios</strong></td>
                                         <th><strong>Acciones</strong></td>
                                       </tr>
                                     </thead>
                                     <tbody>
-                                      <% @renta.pagos.order(:id).reverse_order.each do |pago| %>
+                                      <% @renta.pagos.order(:mes).reverse_order.each do |pago| %>
                                       <tr>
                                           <td><%= pago.categoria.to_label%></td>
                                           <td><%= pago.monto%></td>

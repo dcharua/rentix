@@ -1,10 +1,10 @@
 class User < ActiveRecord::Base
-  has_many :inquilinos
-  has_many :propiedads
-  has_many :pagos
-  has_many :plazos
-  has_many :gastos
-  has_many :rentas, class_name: "::Rentas", foreign_key: "user_id"
+  has_many :inquilinos, dependent: :destroy
+  has_many :propiedads, dependent: :destroy
+  has_many :pagos, dependent: :destroy
+  has_many :plazos, dependent: :destroy
+  has_many :gastos, dependent: :destroy
+  has_many :rentas, class_name: "::Rentas", foreign_key: "user_id", dependent: :destroy
 
 
   # Include default devise modules. Others available are:
