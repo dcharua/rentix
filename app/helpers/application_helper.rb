@@ -24,7 +24,7 @@ module ApplicationHelper
     end
 
     def rentas_terminadas
-     current_user.rentas.where( "rentas.final < ? ", Time.now)
+     current_user.rentas.where( "rentas.final <= ? ", Time.now)
     end
 
     def getRentas
