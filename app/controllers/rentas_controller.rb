@@ -1,11 +1,15 @@
+<<<<<<< HEAD
 class RentasController < ApplicationController
   before_action :set_renta, only: [:edit, :update, :show, :destroy, :terminar]
+=======
+  class RentasController < ApplicationController
+  before_action :set_renta, only: [:edit, :update, :show, :destroy]
+>>>>>>> 70f58b6cee663fd805fc7b765c9c26881260a93b
   before_action :require_same_user, only: [:edit, :update, :destroy]
 
   def index
     @rentas = current_user.rentas.all
     @actualizado = current_user.rentas.maximum('updated_at')
-
   end
 
   def new
@@ -50,6 +54,7 @@ class RentasController < ApplicationController
 
 
   def update
+<<<<<<< HEAD
     time = Time.now
     if @renta.update(renta_params)
       if (plazo = current_user.plazos.where("rentas_id = ? AND plazos.final > ?", @renta.id, Time.now).first)
@@ -71,6 +76,23 @@ class RentasController < ApplicationController
       else
         render 'edit'
       end
+=======
+    tmp = @renta.final
+    time = Time.now
+
+    if @renta.update(renta_params)
+      loop do
+        if !@renta.pagos.where("extract(month from mes) = ?", time.month).exists?
+        pago = Pago.new({ :mes => time, :rentas_id => @renta.id, :pagado => false})
+        pago.user = current_user
+        pago.save
+        time = time + 1.month
+      break if @renta.final < time
+      flash[:success] = "Los datos fueron actualizados"
+      redirect_to rentas_path(params[:id])
+    else
+      render 'edit'
+>>>>>>> 70f58b6cee663fd805fc7b765c9c26881260a93b
     end
   end
 

@@ -62,6 +62,7 @@
           </div>
         </div>
 
+<<<<<<< HEAD
         <div class="row">
             <div class="col-lg-12">
                 <div class="ibox float-e-margins">
@@ -90,6 +91,63 @@
                                 Ingreso anual esperado
                             </h3>
                             <small>por rentas</small>
+=======
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                  <div class="ibox-title">
+                      <h5>Ingresos</h5>
+                      <div class="ibox-tools">
+                          <a class="collapse-link">
+                              <i class="fa fa-chevron-up"></i>
+                          </a>
+                          <a class="close-link">
+                              <i class="fa fa-times"></i>
+                          </a>
+                      </div>
+                  </div>
+                    <div class="ibox-content">
+                        <div>
+                                <span class="pull-right text-right">
+                                  <h1 class="m-b-xs">$ <%= @ingresoR %></h1>
+                                  <h3 class="font-bold no-margins">
+                                      Recibido hasta el momento
+                                  </h3>
+                                  <small>por pagos registrados</small>
+                                </span>
+                            <h1 class="m-b-xs">$ <%= @ingresoT %></h1>
+                            <h3 class="font-bold no-margins">
+                                Ingreso anual esperado
+                            </h3>
+                            <small>por rentas</small>
+                        </div>
+
+                        <div>
+                            <canvas id="lineChart" height="70"></canvas>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Pagos del mes y adelantados</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+>>>>>>> 70f58b6cee663fd805fc7b765c9c26881260a93b
                         </div>
 
                         <div>
@@ -235,10 +293,16 @@
                     <canvas id="doughnutChart2" height="140"></canvas>
                 </div>
             </div>
+<<<<<<< HEAD
         </div>
     </div>
     </div>
   </div>
+=======
+
+
+    </div>
+>>>>>>> 70f58b6cee663fd805fc7b765c9c26881260a93b
     <% content_for :javascript do %>
 
     <script type="text/javascript">
@@ -280,6 +344,7 @@
         var ctx = document.getElementById("lineChart").getContext("2d");
         new Chart(ctx, {type: 'line', data: lineData, options:lineOptions});
 
+<<<<<<< HEAD
         var doughnutData = {
             labels: ['Mantenimiento', 'Administracion',  'Reparaciones', 'Servicios','Limpieza','Impuestos',  'Renovacion','Otros' ],
             datasets: [{
@@ -312,6 +377,8 @@
         new Chart(ctx5, {type: 'doughnut', data: doughnutData2, options:doughnutOptions});
 
 
+=======
+>>>>>>> 70f58b6cee663fd805fc7b765c9c26881260a93b
     });
 
 

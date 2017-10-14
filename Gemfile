@@ -25,6 +25,8 @@ gem 'jquery-rails'
 gem 'simple_form'
 gem 'cocoon'
 
+
+
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
 
@@ -39,7 +41,7 @@ group :development, :test do
 end
 
 group :production do
-  gem 'pg'
+  gem 'pg', '0.20'
   gem 'rails_12factor'
 end
 
