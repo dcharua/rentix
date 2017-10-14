@@ -1,10 +1,6 @@
-<<<<<<< HEAD
-class RentasController < ApplicationController
-  before_action :set_renta, only: [:edit, :update, :show, :destroy, :terminar]
-=======
+
   class RentasController < ApplicationController
   before_action :set_renta, only: [:edit, :update, :show, :destroy]
->>>>>>> 70f58b6cee663fd805fc7b765c9c26881260a93b
   before_action :require_same_user, only: [:edit, :update, :destroy]
 
   def index
@@ -54,29 +50,6 @@ class RentasController < ApplicationController
 
 
   def update
-<<<<<<< HEAD
-    time = Time.now
-    if @renta.update(renta_params)
-      if (plazo = current_user.plazos.where("rentas_id = ? AND plazos.final > ?", @renta.id, Time.now).first)
-        plazo.final = Time.now
-        plazo.save
-      end
-    plazo = Plazo.new(plazo_params)
-    plazo.user = current_user
-    plazo.rentas = @renta
-    time = Time.now
-    if time.day > @renta.dia
-      time = time + 1.month
-    end
-    time = time.change(day: @renta.dia)
-    plazo.inicio = time
-      if plazo.save
-        flash[:success] = "Se edito la renta"
-        redirect_to rentas_path(params[:id])
-      else
-        render 'edit'
-      end
-=======
     tmp = @renta.final
     time = Time.now
 
@@ -92,7 +65,6 @@ class RentasController < ApplicationController
       redirect_to rentas_path(params[:id])
     else
       render 'edit'
->>>>>>> 70f58b6cee663fd805fc7b765c9c26881260a93b
     end
   end
 

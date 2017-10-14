@@ -34,25 +34,6 @@ class PagosController < ApplicationController
     end
   end
 
-<<<<<<< HEAD
-=======
-  def nuevo
-
-  end
-
-  def crear
-    #@pago = Pago.where(["rentas_id = ? AND cast(strftime('%Y', mes) as int) = ? AND cast(strftime('%m', mes) as int) = ?", params[:rentas], params[:mes]["fecha(1i)"].to_i, params[:mes]["fecha(2i)"].to_i]).first
-    @pago = Pago.where(["rentas_id = ? AND extract(year from mes)::integer = ? AND extract(month from mes)::integer = ?", params[:rentas], params[:mes]["fecha(1i)"].to_i, params[:mes]["fecha(2i)"].to_i]).first
-
-    if @pago
-      render partial: "form"
-    else
-      render status: :not_found, nothing: true
-   end
-
-  end
-
->>>>>>> 70f58b6cee663fd805fc7b765c9c26881260a93b
   def update
     if @pago.update(pago_params)
       flash[:success] = "Los datos fueron actualizados"

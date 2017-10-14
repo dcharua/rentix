@@ -20,7 +20,6 @@ module ApplicationHelper
     end
 
     def rentas_activas
-<<<<<<< HEAD
      current_user.rentas.where( "rentas.inicio <= ? AND rentas.final > ? ", Date.today, Time.now)
     end
 
@@ -39,35 +38,6 @@ module ApplicationHelper
     def pagos_garantia
       rentas_activas.joins(:pagos).select("pagos.id as pid, inquilino_id, propiedad_id, pagos.fecha, monto, comentarios,  rentas.id ").where(["extract(month from pagos.mes) >= ? AND pagos.categoria_id = ?", Time.now.strftime("%m"), 2])
     end
-=======
-     current_user.rentas.where( "final::date > ?", DateTime.now.to_date)
-
-    end
-
-    def pagos_hechos
-      #rentas_activas.joins(:pagos).select("pagos.id as pid, inquilino_id, propiedad_id, dia, costo, monto, mes, rentas.created_at, rentas.id ").where(["strftime('%m', pagos.mes) >= ? AND pagado == ?", Time.now.strftime("%m"), true])
-            rentas_activas.joins(:pagos).select("pagos.id as pid, inquilino_id, propiedad_id, dia, costo, monto, mes, rentas.created_at, rentas.id ").where(["extract(month from pagos.mes) >= ? AND pagado = ?", Time.now.strftime("%m"), true])
-
-    end
-
-    def pagos_atrasados
-      #rentas_activas.joins(:pagos).select("pagos.id as pid, inquilino_id, propiedad_id, dia, costo, mes, rentas.created_at, rentas.id").where(["strftime('%m', pagos.mes) == ? AND pagado == ?", Time.now.strftime("%m"), false])
-         rentas_activas.joins(:pagos).select("pagos.id as pid, inquilino_id, propiedad_id, dia, costo, mes, rentas.created_at, rentas.id").where(["extract(month from pagos.mes) = ? AND pagado = ?", Time.now.strftime("%m"), false])
-
-    # sql = "SELECT pagos.id, inquilino_id, propiedad_id, dia
-    #                               FROM          rentas
-    #                               JOIN users    ON rentas.user_id == user.id
-    #                               LEFT JOIN     pagos    ON rentas.id == rentas_id
-    #                               WHERE         rentas.dia < strftime('%d')
-    #                               group by (rentas.id);"
-    #                           records_array = ActiveRecord::Base.connection.execute(sql)
-    #                           puts records_array
-    end
-
-    def pagos_proximos
-      #rentas_activas.joins("LEFT JOIN pagos ON rentas.id == rentas_id").select("pagos.id, inquilino_id, propiedad_id, dia").where("rentas.dia >=	strftime('%d')")
-             rentas_activas.joins("LEFT JOIN pagos ON rentas.id = rentas_id").select("pagos.id, inquilino_id, propiedad_id, dia").where("rentas.dia >=	extract(day from rentas.dia)")
->>>>>>> 70f58b6cee663fd805fc7b765c9c26881260a93b
 
     def pagos_otro
       rentas_activas.joins(:pagos).select("pagos.id as pid, inquilino_id, propiedad_id, pagos.fecha, monto, comentarios,  rentas.id ").where(["extract(month from pagos.mes) >= ? AND pagos.categoria_id = ?", Time.now.strftime("%m"), 4])
@@ -75,7 +45,7 @@ module ApplicationHelper
 
     def rentas_por_vencer
       time = Time.now + 2.month
-      current_user.rentas.where( "final::date < ? AND final::date > ? ", time, Time.now)
+      current_user.rentas.where( "final < ? AND final > ? ", time, Time.now)
     end
 
     def getBalance(renta)
@@ -86,7 +56,6 @@ module ApplicationHelper
       if inicio.day > renta["dia"]
         inicio = inicio + 1.month
       end
-<<<<<<< HEAD
       inicio = inicio.change(day: renta["dia"])
         time = inicio
         loop do
@@ -214,25 +183,4 @@ module ApplicationHelper
 
    end
 end
-=======
-      return getTotalPagado(renta) - meses * renta["costo"]
-    end
-
-    def getTotalPagado(renta)
-     Rentas.joins(:pagos).where("rentas.id =?",   renta.id ).sum(:monto)
-    end
-
-    def getIngreso(mes)
-      fecha = Date.new(Time.now.year, mes, 28)
-      current_user.rentas.where( "final > ? AND created_at < ?", fecha, fecha).sum(:costo)
-    end
-
-    def getIngresoReal(mes)
-      #current_user.rentas.joins(:pagos).where("strftime('%m', pagos.mes) == ?", mes).sum(:monto)
-      current_user.rentas.joins(:pagos).where("extract(month from pagos.mes) = ?", mes).sum(:monto)
-
-      # extract(year from date) = ? and extract(month from date) = ?", y, m)
-    end
-
->>>>>>> 70f58b6cee663fd805fc7b765c9c26881260a93b
 end
