@@ -58,18 +58,13 @@ module ApplicationHelper
       end
       inicio = inicio.change(day: renta["dia"])
         time = inicio
-        if Time.now < time
+        if Time.now > time
         loop do
           balance += current_user.plazos.select(:costo).where("rentas_id = ? AND final > ? AND inicio <= ?", renta["id"], time, time).sum(:costo)
           time = time + 1.month
         break if Time.now < time
       end
     end
-    # meses = (final.year * 12 + final.month) - (inicio.year * 12 + inicio.month)
-    # if inicio.day < final.day
-    #   meses = meses +1
-    # end
-    # return  meses * plazo.costo - getTotalPagado(renta)
     return  getTotalPagado(renta) - balance
     end
 
