@@ -60,10 +60,8 @@
 //= require jvectormap/jquery-jvectormap-2.0.2.min.js
 //= require jvectormap/jquery-jvectormap-world-mill-en.js
 //= require toastr/toastr.min.js
-<<<<<<< HEAD
 //= require sweetalert/sweetalert.min.js
-=======
->>>>>>> 70f58b6cee663fd805fc7b765c9c26881260a93b
+
 
 var hide_spinner = function(){
   $('#spinner').hide();
